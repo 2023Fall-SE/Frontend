@@ -8,6 +8,9 @@ import { CarpoolSearch } from './pages/carpool/CarpoolSearch';
 import { CarpoolLaunch } from './pages/carpool/CarpoolLaunch';
 import { CarpoolJoined } from './pages/carpool/CarpoolJoined';
 import { CarpoolEnded } from './pages/carpool/CarpoolEnded';
+import { CookiesProvider, useCookies } from "react-cookie";
+
+
 
 const router = createBrowserRouter([
   { path: '/', element: <RootLayout />, children: [
