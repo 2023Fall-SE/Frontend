@@ -1,17 +1,25 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+// UseEffect , Router : Loader,Action
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RootLayout } from './layouts/RootLayout';
+import { CarpoolSearch } from './pages/carpool/CarpoolSearch';
+import { CarpoolLaunch } from './pages/carpool/CarpoolLaunch';
+import { CarpoolJoined } from './pages/carpool/CarpoolJoined';
+import { CarpoolEnded } from './pages/carpool/CarpoolEnded';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+const router = createBrowserRouter([
+  { path: '/', element: <RootLayout />, children: [
+    { path: '/search', element: <CarpoolSearch /> },
+    { path: '/launch', element: <CarpoolLaunch /> },
+    { path: '/joined', element: <CarpoolJoined /> },
+    { path: '/ended', element: <CarpoolEnded /> },
+  ] },
+]);
+
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={ router } />
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
