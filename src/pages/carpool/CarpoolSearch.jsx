@@ -1,39 +1,27 @@
-import { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import {
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  Paper,
+  Box,
+  Container,
+  Divider,
+} from "@mui/material";
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from 'dayjs';
 
 export const CarpoolSearch = () => {
-
-  let url = "http://localhost:8000";
-  // print  
   const [isSearchClicked, setIsSearchClicked] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
-  const [routeprint,setrouteprint] = useState([]);
-
-  const [currentDate, setCurrentDate] = useState(new Date());
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentDate(new Date());
-    }, 1000);
-
-    
-    return () => clearInterval(intervalId);
-  }, []); // Transport one empty tuple as second parameter to insure useEffect as Componet only work once
+  const [currentDate, setCurrentDate] = useState(dayjs());
   
-  const formattedDate = currentDate.toLocaleTimeString();
-  function routelist(routearray){
-    let text = ""
-    for(let i = 0; i < routearray.length; i++){
-      if(i  != routearray.length-1)
-        text += routearray[i] + '->';
-      else
-        text += routearray[i];
-    }
-    return text;
-  }
-  
-  
-
   const onSearchClick = () => {
-    // API call
+    // Simulating API call
     const apiResult = [
       {
         id: 1,
@@ -62,43 +50,85 @@ export const CarpoolSearch = () => {
     ];
     setIsSearchClicked(true);
     setSearchResult(apiResult);
-  }
+  };
 
   const renderSearchResult = () => {
-    return searchResult.map((item) => {
-      return (
-        <div key={item.id}>
-          <p>發起人：{item.launcher}</p>
-          <p>目前共乘人數：{item.num}</p>
-          <p>共乘方式：{item.carpool_attribute}</p>
-          <p>共乘時間：{item.time}</p>
-          <p>共乘路線：{routelist(item.route)}</p>
-          <p>共乘ID:{item.id}</p>
-          <button>加入共乘</button>
-          <hr />
-        </div>
-      );
-    });
-  }
+    return searchResult.map((item) => (
+      <Card key={item.id} variant="outlined" className="result-card">
+        <CardContent>
+          <Typography variant="h6">{item.launcher}</Typography>
+          <Typography>{`路線: ${item.route.join(' -> ')}`}</Typography>
+          <Typography>{`人數: ${item.num}`}</Typography>
+          <Typography>{`時間: ${item.time}`}</Typography>
+          <Typography>{`屬性: ${item.carpool_attribute}`}</Typography>
+        </CardContent>
+        <Divider />
+        <Box p={2}>
+          <Button variant="contained" color="primary">
+            加入共乘
+          </Button>
+        </Box>
+      </Card>
+    ));
+  };
 
   return (
-    <div>
-      <h1>搜尋共乘</h1>
-      <hr />
-      <p>目前時間 :{formattedDate}</p>
-      <label for="startLocation">上車地點：</label>
-      <input type="text" id="startLocation" name="startLocation" placeholder="請輸入上車地點"/>
-      <br/>
-      <br />
-      <label for="endLocation">下車地點：</label>
-      <input type="text" id="endLocation" name="endLocation" placeholder="請輸入下車地點" />
-      <button onClick={onSearchClick}>搜尋</button><br />
-      <br />
-      <hr />
-      <h2>搜尋結果</h2>
-      { isSearchClicked && searchResult.length === 0 && (<p>沒有搜尋結果</p>) }
-      { isSearchClicked && searchResult.length > 0 && (renderSearchResult())}
-    </div>
+    <Container style={{ marginTop: 20 }}>
+      <Paper elevation={3} className="search-container" style={{padding: 20 }}>
+        <Typography variant="h4" className="search-title">
+          搜尋共乘
+        </Typography>
+        <Divider />
+        <Grid container spacing={2} className="search-form">
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="上車地點"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="下車地點"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+                label="日期和時間"
+                value={currentDate}
+                onChange={(date) => setCurrentDate(date)}
+                renderInput={(props) => (
+                  <TextField {...props} variant="outlined" fullWidth />
+                )}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={onSearchClick}
+            >
+              搜尋
+            </Button>
+          </Grid>
+        </Grid>
+        <Divider />
+        <Box mt={3}>
+          <Typography variant="h5">搜尋結果</Typography>
+          {isSearchClicked && searchResult.length === 0 && (
+            <Typography>沒有搜尋結果</Typography>
+          )}
+          {isSearchClicked && searchResult.length > 0 && renderSearchResult()}
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 

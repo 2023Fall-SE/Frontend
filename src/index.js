@@ -8,6 +8,7 @@ import { CarpoolSearch } from './pages/carpool/CarpoolSearch';
 import { CarpoolLaunch } from './pages/carpool/CarpoolLaunch';
 import { CarpoolJoined } from './pages/carpool/CarpoolJoined';
 import { CarpoolEnded } from './pages/carpool/CarpoolEnded';
+import { Temp } from './pages/carpool/Temp';
 import { CookiesProvider, useCookies } from "react-cookie";
 
 
@@ -18,6 +19,7 @@ const router = createBrowserRouter([
     { path: '/launch', element: <CarpoolLaunch /> },
     { path: '/joined', element: <CarpoolJoined /> },
     { path: '/ended', element: <CarpoolEnded /> },
+    { path: '/temp', element: <Temp />},
   ] },
 ]);
 
