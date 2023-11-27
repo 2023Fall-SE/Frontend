@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Typography,
@@ -56,11 +56,12 @@ export const CarpoolSearch = () => {
     return searchResult.map((item) => (
       <Card key={item.id} variant="outlined" className="result-card">
         <CardContent>
-          <Typography variant="h6">{item.launcher}</Typography>
-          <Typography>{`路線: ${item.route.join(' -> ')}`}</Typography>
-          <Typography>{`人數: ${item.num}`}</Typography>
-          <Typography>{`時間: ${item.time}`}</Typography>
-          <Typography>{`屬性: ${item.carpool_attribute}`}</Typography>
+          <Typography variant="h6">{`發起人: ${item.launcher}`}</Typography>
+          <Typography>{`目前共乘人數: ${item.num}`}</Typography>
+          <Typography>{`共乘方式: ${item.carpool_attribute}`}</Typography>
+          <Typography>{`共乘時間: ${item.time}`}</Typography>
+          <Typography>{`共乘路線: ${item.route.join(' -> ')}`}</Typography>
+          <Typography>{`共乘ID: ${item.id}`}</Typography>
         </CardContent>
         <Divider />
         <Box p={2}>
