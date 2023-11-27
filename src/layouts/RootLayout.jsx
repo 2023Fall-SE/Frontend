@@ -12,7 +12,7 @@ export const RootLayout = () => {
 
   return (
     <Row className="vh-100">
-      <Col xs={3} className="p-0"> {/* Added p-0 to remove default margin */}
+      <Col xs={3} className="p-0 sidebar"> {/* Added p-0 to remove default margin */}
         <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark vh-100">
           <Image src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="Bootstrap" width="72" height="57" className="mb-3" />
           <hr />
@@ -36,13 +36,16 @@ export const RootLayout = () => {
           </ul>
         </div>
       </Col>
-
+      
+      
       <Col xs={9} className="p-0"> {/* Added p-0 to remove default margin */}
-        {/* Include the Header component here */}
-        <Header />
-
-        {/* Render the child components */}
-        <Outlet />
+        <div className="overflow-auto vh-100"> {/* warp the scrollable object */}
+          {/* the Header component */}
+          <Header />
+        
+          {/* The imported carpool page component */}
+          <Outlet />
+        </div>
       </Col>
     </Row>
   );
