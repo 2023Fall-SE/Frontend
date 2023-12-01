@@ -3,38 +3,40 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter , useLocation } from 'react-router-dom';
 
 
-export const Carpooljoinevent = ({ id }) => {
+export const Carpooljoinevent = ({ itemid , userid}) => {
 
     const url_get_usr_info = "http://localhost:8000/get-user-info/";
     const url_join_the_carpool = "http://localhost:8000/join-the-carpool"
     //loader function 
     const [JoinedEvent, setJoinedevent] = useState(false);
-    const [BadEvent, setBadEvent] =  useState(false);
-    const [BadEventdata,setBadEventdata] = useState([]);
+    const [Event, setEvent] =  useState(false);
+    const [EventStart, setEventstart] = useState();
+    const [Eventdata,setEventdata] = useState([]);
+    const [BadEventData,setBadEventdata] = useState([]);
     const [Successfuldata,setSuccesfuldata] = useState([]);
 
     useEffect(() => {
 
-        //JoinTheCarpoolLoader();
+        JoinTheCarpoolLoader();
     
     }, []); 
     
-
+    const location = useLocation();
+    
     
 
     const JoinTheCarpoolLoader = () => {
 
         const target = {
         "eventForm": {
-          "event_id": 1
+          "event_id": itemid
         },
         "user": {
-          "user_id": 1
+          "user_id": userid
         }
         }
 
-     
-      
+         
       fetch(url_join_the_carpool,{
             method : 'POST' ,
             headers: new Headers({
@@ -42,50 +44,49 @@ export const Carpooljoinevent = ({ id }) => {
                 'Content-Type' : 'application/json' // <-- Specifying the Content-Type
             }),body : JSON.stringify(target)
             }) // <-- Post Parameters
-            .then((response) => {
-                return response.text();
-            })
+            .then((response) => response.json())
             .then((responseText) => {
-                setBadEvent(true);
-                setBadEventdata(responseText);
+                //console.log(responseText);
+                setEvent(true);
+                setEventdata(responseText);
+                console.log(responseText);
+                
                 //alert(responseText);
             })
             .catch((error) => {
-                setBadEvent(true);
+                
                 setBadEventdata(error);
+                console.log(error);
                 console.error(error);
             });
     
     }
 
-    const Badeventhandle = () =>{
+    const Eventhandle = () =>{
+        
+
         return(
             <dev>
-                <h2>{BadEventdata}</h2>
+                {Eventdata.detail === "位子不夠" &&  <h2>位子不夠:無法加入行程</h2>}
+                {Eventdata.detail === "無此Event" && <h2>找不到行程</h2>}
+                
+                {Eventdata.detail === "使用者已在此Event" && <h2> 已加入Carpool行程</h2>}
+                {Eventdata.result === "success" &&  <h2>成功加入行程</h2>}
             </dev>
         );
     }
-    const Successfulhandle = () => {
-        return(
-            <dev>
-                <h2>{Successfuldata}</h2>
-            </dev>
-        )
-    }
+    
 
-    const location = useLocation();
+    
     
 
     return ( 
         <dev>
-            <h1>已成功加入共乘</h1>
             <hr />
             <br />
             <h2>加入結果</h2>
             <br />
-            {(JoinTheCarpoolLoader())}
-            {BadEvent && Badeventhandle()}
-            {!BadEvent && Successfulhandle()}
+            {Event && (Eventhandle())}
             <p></p>
         </dev>
         

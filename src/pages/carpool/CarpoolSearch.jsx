@@ -8,11 +8,11 @@ export const CarpoolSearch = () => {
   const url_find = "http://localhost:8000/find-carpool";
   const url_user = "http://localhost:8000/get-user-info/"; 
 
-  const navigate = useNavigate();
+  
 
     // = fetch(url);
   const [isSearchClicked, setIsSearchClicked] = useState(false);
-  const [isJoinedEventclicked, setisJoinedEventClicked] = useState(false);
+  const [isJoinedEventclicked, setisJoinedEventClicked] = useState([]);
   
   const [start, setStart] = useState('');
   const [userdata, setuserdata] = useState([]);
@@ -25,11 +25,14 @@ export const CarpoolSearch = () => {
   "token_type": "bearer"
    */
   
+
+  
   //  input start point and end point to find carpool
-  const FindCarpool = async( str1,str2) => {
+  const FindCarpool = ( str1,str2) => {
 
    
     const urlfindCarpool = url_find + '?startLocation=' + str1 + '&endLocation=' + str2;
+    // 
 
     fetch( urlfindCarpool, {
             method: "GET",
@@ -58,6 +61,7 @@ export const CarpoolSearch = () => {
       setCurrentDate(new Date());
     }, 1000);
 
+
     return () => clearInterval(intervalId);
 
 
@@ -69,18 +73,11 @@ export const CarpoolSearch = () => {
   // if click search, then search the carpool
   const onSearchClick = () => {
     // API call
-    
-
-    setIsSearchClicked(true);
-    FindCarpool(start,end);
-    //JoinTheCarpoolLoader();
+      setIsSearchClicked(true);
+      FindCarpool(start,end);
   }
   
-  // if click Joined event then set state  ture
-  const onJoinClick =() => {
-
-    setisJoinedEventClicked(true);
-  }
+ 
 
   
 
@@ -103,28 +100,25 @@ export const CarpoolSearch = () => {
       routearray = routearray.replace(/,/g,"->");
       
       return routearray;
-  }
 
-    // print correct time and date format 
-    function RouteTimePrint(route){
-      
     }
     
     
-    
+    //{isJoinedEventclicked && <p>確定加入</p> && navigate("/" + item.id + "," + item.initiator  ,{replace : true})} 
    
     return userdata.map((item) => {
       
       return (
         <div key={item.id}>
           <p>發起人：{item.initiator}</p>
-          <p>目前共乘人數：{item.available_seats}</p>
+          <p>目前剩餘座位：{item.available_seats}</p>
           <p>共乘方式： { printSelfDrive(item.is_self_drive) }</p>
-          <p>共乘時間：{item.start_time}</p>
+          <p>共乘時間：{item.start_time}</p>end
           <p>共乘路線：{routelist(item.location)}</p>
           <p>共乘ID:{item.id}</p>
-          <button onClick = {onJoinClick}> 加入共乘</button>
-          {isJoinedEventclicked && <p>確定加入</p> && navigate("/" + item.id ,{replace : true})} 
+          <button onClick = {() => {setisJoinedEventClicked([ ...isJoinedEventclicked,{ id : item.id}])} }> 加入共乘</button>
+          {console.log(isJoinedEventclicked)}
+          { isJoinedEventclicked.length > 0 && isJoinedEventclicked[0].id ===  item.id  && <p>確定加入</p> && <Carpooljoinevent itemid={item.id} userid={item.initiator}/>} 
           <hr />
         </div>
       );
@@ -139,13 +133,11 @@ export const CarpoolSearch = () => {
       <p>目前時間 :{formattedDate}</p>
       <label for="startLocation">上車地點：</label>
       <input type="text" id="startLocation" name="startLoca rtion" placeholder="請輸入上車地點"
-        value={start}
         onChange={(e) => setStart(e.target.value)}/>
       <br/>
       <br />
       <label for="endLocation">下車地點：</label>
       <input type="text" id="endLocation" name="endLocation" placeholder="請輸入下車地點"
-        value={end}
         onChange={(e) => setEnd(e.target.value)}
       />
       <button onClick={onSearchClick}>搜尋</button><br />

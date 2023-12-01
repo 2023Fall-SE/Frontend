@@ -17,20 +17,24 @@ export const RootLayout = () => {
           <hr />
           <ul className="nav nav-pills flex-column mb-auto">
             <li id='nav0' className="nav-item" onClick={onNavClick}>
-              { page === 'nav0' ? (<Link to="search" className="nav-link active">搜尋共乘</Link>)
+              { page === 'nav0' ? (<Link to="search" className="nav-link active">搜尋共乘：目前在此</Link>)
               : (<Link to="search" className="nav-link text-white">搜尋共乘</Link>) }
             </li>
             <li id='nav1' className="nav-item" onClick={onNavClick}>
-              { page === 'nav1' ? (<Link to="launch" className="nav-link active">發起共乘</Link>)
+              { page === 'nav1' ? (<Link to="launch" className="nav-link active">發起共乘：目前在此</Link>)
               : (<Link to="launch" className="nav-link text-white">發起共乘</Link>) }
             </li>
             <li id='nav2' className="nav-item" onClick={onNavClick}>
-              { page === 'nav2' ? (<Link to="joined" className="nav-link active">已加入的共乘</Link>)
+              { page === 'nav2' ? (<Link to="joined" className="nav-link active">已加入的共乘：目前在此</Link>)
               : (<Link to="joined" className="nav-link text-white">已加入的共乘</Link>) }
             </li>
             <li id='nav3' className="nav-item" onClick={onNavClick}>
-              { page === 'nav3' ? (<Link to="ended" className="nav-link active">結束的共乘</Link>)
+              { page === 'nav3' ? (<Link to="ended" className="nav-link active">結束的共乘：目前在此</Link>)
               : (<Link to="ended" className="nav-link text-white">結束的共乘</Link>) }
+            </li>
+            <li id='nav4' className="nav-item" onClick={onNavClick}>
+              { page === 'nav4' ? (<Link to="Login" className="nav-link active">登入頁面：目前在此</Link>)
+              : (<Link to="Login" className="nav-link text-white">登入頁面</Link>) }
             </li>
           </ul>
         </div>
