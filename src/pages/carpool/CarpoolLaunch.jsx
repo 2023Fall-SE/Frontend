@@ -42,7 +42,7 @@ export const CarpoolLaunch = () => {
 
     var target = {
       "user_id": 1,
-      "start_time": "2023-12-20T07:22:38.757Z",
+      "start_time": selectedDate,
       "self_drive_or_not": true,
       "number_of_people": 6,
       "start_location": "台北",
@@ -82,7 +82,7 @@ export const CarpoolLaunch = () => {
 
       setOtherlocations([ ...otherlocations,{ place : otherlocate}]);
 
-      console.log(otherlocations[otherlocations.length -1]);
+      console.log(selectedDate);
   }
 
   useEffect(() => {
