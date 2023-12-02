@@ -2,6 +2,8 @@ import { useState ,useEffect } from 'react';
 import {NavLink, Outlet, useLoaderData, Link, Form, useNavigate} from "react-router-dom";
 import Carpooljoinevent from './CarpoolJoinEvent';
 
+
+
 export const CarpoolSearch = () => {
 
   const url_join = "http://localhost:8000/join-the-carpool";
@@ -24,8 +26,6 @@ export const CarpoolSearch = () => {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJleHAiOjE3MDEwOTU5MDN9.BOgYG-Z-S4iiozUzxZ3xsRYQ7g2YuTHseb4ZlyKnl28",
   "token_type": "bearer"
    */
-  
-
   
   //  input start point and end point to find carpool
   const FindCarpool = ( str1,str2) => {
@@ -76,10 +76,6 @@ export const CarpoolSearch = () => {
       setIsSearchClicked(true);
       FindCarpool(start,end);
   }
-  
- 
-
-  
 
   const renderSearchResult = () => {
 
@@ -150,6 +146,8 @@ export const CarpoolSearch = () => {
       </script>
       <Outlet />
     </div>
+
+    
   );
 };
 

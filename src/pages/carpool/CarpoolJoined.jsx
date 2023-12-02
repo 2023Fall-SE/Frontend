@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter ,Link } from 'react-router-dom';
 
-
 export const CarpoolJoined = () => {
   const [JoinedSearchClicked, setJoinedSearchclicked] = useState(false);
   const [Joinedresult, setJoinedresult] = useState([]);
