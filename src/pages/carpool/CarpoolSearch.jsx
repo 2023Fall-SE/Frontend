@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import CarpoolCard from './CarpoolCard';
+
 import {
   Grid,
   Typography,
   TextField,
   Button,
-  Card,
-  CardContent,
   Paper,
   Box,
   Container,
@@ -54,28 +54,15 @@ export const CarpoolSearch = () => {
 
   const renderSearchResult = () => {
     return searchResult.map((item) => (
-      <Card key={item.id} variant="outlined" className="result-card">
-        <CardContent>
-          <Typography variant="h6">{`發起人: ${item.launcher}`}</Typography>
-          <Typography>{`目前共乘人數: ${item.num}`}</Typography>
-          <Typography>{`共乘方式: ${item.carpool_attribute}`}</Typography>
-          <Typography>{`共乘時間: ${item.time}`}</Typography>
-          <Typography>{`共乘路線: ${item.route.join(' -> ')}`}</Typography>
-          <Typography>{`共乘ID: ${item.id}`}</Typography>
-        </CardContent>
-        <Divider />
-        <Box p={2}>
-          <Button variant="contained" color="primary">
-            加入共乘
-          </Button>
-        </Box>
-      </Card>
+      <Box key={item.id} mt={1}>
+        <CarpoolCard item={item} cardType="Active" />
+      </Box>
     ));
   };
 
   return (
     <Container style={{ marginTop: 20 }}>
-      <Paper elevation={3} className="search-container" style={{padding: 20 }}>
+      <Paper elevation={3} className="search-container" style={{ padding: 20 }}>
         <Typography variant="h4" className="search-title">
           搜尋共乘
         </Typography>
@@ -123,11 +110,11 @@ export const CarpoolSearch = () => {
         <Divider />
         <Box mt={3}>
           <Typography variant="h5">搜尋結果</Typography>
-          {isSearchClicked && searchResult.length === 0 && (
-            <Typography>沒有搜尋結果</Typography>
-          )}
-          {isSearchClicked && searchResult.length > 0 && renderSearchResult()}
         </Box>
+        {isSearchClicked && searchResult.length === 0 && (
+          <Typography>沒有搜尋結果</Typography>
+        )}
+        {isSearchClicked && searchResult.length > 0 && renderSearchResult()}
       </Paper>
     </Container>
   );

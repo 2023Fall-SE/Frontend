@@ -1,11 +1,10 @@
 
 import { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
 
 
 export const CarpoolJoined = () => {
-  const [JoinedSearchClicked, setJoinedSearchclicked] = useState(false);
-  const [Joinedresult, setJoinedresult] = useState([]);
+  const [JoinedSearchClicked, setJoinedSearchClicked] = useState(false);
+  const [JoinedResult, setJoinedResult] = useState([]);
   
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -44,12 +43,12 @@ export const CarpoolJoined = () => {
         carpool_attribute: "發起人自駕",
       },
     ];
-    setJoinedSearchclicked(true);
-    setJoinedresult(api);
+    setJoinedSearchClicked(true);
+    setJoinedResult(api);
   }
 
   const renderJoinedResult = () => {
-    return Joinedresult.map((item) => {
+    return JoinedResult.map((item) => {
       return (
         <div key={item.id}>
           <p>發起人：{item.launcher}</p>
@@ -66,8 +65,8 @@ export const CarpoolJoined = () => {
 
 
   /*      <button onClick={onJoinClick()}>搜尋</button>
-      { JoinedSearchClicked && Joinedresult.length === 0 && (<p>沒有搜尋結果</p>) }
-      { JoinedSearchClicked && Joinedresult.length > 0 && (renderJoinedResult())}*/
+      { JoinedSearchClicked && JoinedResult.length === 0 && (<p>沒有搜尋結果</p>) }
+      { JoinedSearchClicked && JoinedResult.length > 0 && (renderJoinedResult())}*/
   return (
     <div>
       <h1>已加入的共乘</h1>
@@ -76,8 +75,8 @@ export const CarpoolJoined = () => {
       <br />
       <hr />
       <button onClick={onJoinClick}>顯示已加入的共乘</button>
-      { JoinedSearchClicked && Joinedresult.length === 0 && (<p>沒有搜尋結果</p>) }
-      { JoinedSearchClicked && Joinedresult.length > 0 && (renderJoinedResult())}  
+      { JoinedSearchClicked && JoinedResult.length === 0 && (<p>沒有搜尋結果</p>) }
+      { JoinedSearchClicked && JoinedResult.length > 0 && (renderJoinedResult())}  
     </div>
     
     

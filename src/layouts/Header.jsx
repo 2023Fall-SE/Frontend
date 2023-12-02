@@ -22,13 +22,13 @@ const Header = () => {
 				<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 					{getPageName()}
 				</Typography>
-				<IconButton color="inherit" onClick={() => navigate("/add")}>
+				<IconButton color="inherit" onClick={() => navigate("/payment")}>
 					<PaidIcon />
 				</IconButton>
 				<IconButton color="inherit">
 					<NotificationsIcon />
 				</IconButton>
-				<IconButton color="inherit">
+				<IconButton color="inherit" onClick={() => navigate("/user")}>
 					<AccountCircleIcon />
 				</IconButton>
 			</Toolbar>
