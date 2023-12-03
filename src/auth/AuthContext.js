@@ -1,5 +1,4 @@
 // AuthContext.js
-// 這只是模板 還要加東西！
 import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
