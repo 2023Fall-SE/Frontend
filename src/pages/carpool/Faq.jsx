@@ -1,7 +1,7 @@
 const faq = () => {
-    return (
-        <dev></dev>
-    );
+  return (
+    <dev></dev>
+  );
 }
- 
+
 export default faq;

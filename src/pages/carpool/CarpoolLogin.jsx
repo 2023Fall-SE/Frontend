@@ -1,28 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../../auth/AuthContext';
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Box,
-  Paper,
-  Link as MuiLink,
-} from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {useAuth} from '../../auth/AuthContext';
+import {Box, Button, Container, Link as MuiLink, Paper, TextField, Typography,} from '@mui/material';
 
 export const CarpoolLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const { userToken, login } = useAuth();
-  
-  useEffect( () => {
-    if(userToken !== null)
+  const {isLoading, userToken, login} = useAuth();
+
+  useEffect(() => {
+    if (userToken !== null)
       navigate('/user');
-  });
-  
+  }, [isLoading]);
+
   const handleLogin = async () => {
     try {
       await login(username, password);
@@ -34,8 +26,8 @@ export const CarpoolLogin = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ marginTop: 8 }}>
-      <Paper elevation={3} sx={{ padding: 4 }}>
+    <Container maxWidth="sm" sx={{marginTop: 8}}>
+      <Paper elevation={3} sx={{padding: 4}}>
         <Typography variant="h4" gutterBottom>
           Welcome to Carpol Service System
         </Typography>

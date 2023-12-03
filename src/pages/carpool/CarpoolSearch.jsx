@@ -1,43 +1,34 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import CarpoolCard from './CarpoolCard';
-import { useAuth } from "../../auth/AuthContext";
+import {useAuth} from "../../auth/AuthContext";
 
 
-import {
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  Paper,
-  Box,
-  Container,
-  Divider,
-} from "@mui/material";
-import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import {Box, Button, Container, Divider, Grid, Paper, TextField, Typography,} from "@mui/material";
+import {DateTimePicker, LocalizationProvider} from '@mui/x-date-pickers';
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
 
 export const CarpoolSearch = () => {
-  const { userToken } = useAuth();
+  const {userToken} = useAuth();
   const [isSearchClicked, setIsSearchClicked] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
   const [currentDate, setCurrentDate] = useState(dayjs());
-  
+
   const onSearchClick = () => {
     // Simulating API call
     const apiResult = [
       {
         id: 1,
         launcher: 'John',
-        route : ["台北","桃園","新竹"],
-        num : 3,
+        route: ["台北", "桃園", "新竹"],
+        num: 3,
         time: '2021/08/01 12:00',
         carpool_attribute: "Uber",
       },
       {
         id: 2,
         launcher: 'Selina',
-        route : ["台北","桃園","新竹"],
+        route: ["台北", "桃園", "新竹"],
         num: 2,
         time: '2022/09/01 12:00',
         carpool_attribute: "Uber",
@@ -45,8 +36,8 @@ export const CarpoolSearch = () => {
       {
         id: 3,
         launcher: '',
-        route : ["淡水","北車","古亭","公館","新店"],
-        num : 3,
+        route: ["淡水", "北車", "古亭", "公館", "新店"],
+        num: 3,
         time: '2021/08/01 12:00',
         carpool_attribute: "發起人自駕",
       },
@@ -58,19 +49,19 @@ export const CarpoolSearch = () => {
   const renderSearchResult = () => {
     return searchResult.map((item) => (
       <Box key={item.id} mt={1}>
-        <CarpoolCard item={item} cardType="Active" />
+        <CarpoolCard item={item} cardType="Active"/>
       </Box>
     ));
   };
 
   return (
-    <Container style={{ marginTop: 20 }}>
-      <Paper elevation={3} className="search-container" style={{ padding: 20 }}>
-        <Typography variant="h4" className="search-title">
+    <Container style={{marginTop: 20}}>
+      <Paper elevation={3} className="search-container" style={{padding: 20}}>
+        <Typography variant="h4" style={{marginBottom: 20}}>
           搜尋共乘
-          user_id: {userToken?userToken.user_id:"未登入"}
+          user_id: {userToken ? userToken.user_id : "未登入"}
         </Typography>
-        <Divider />
+        <Divider/>
         <Grid container spacing={2} className="search-form">
           <Grid item xs={12} md={6}>
             <TextField
@@ -95,7 +86,7 @@ export const CarpoolSearch = () => {
                 value={currentDate}
                 onChange={(date) => setCurrentDate(date)}
                 renderInput={(props) => (
-                  <TextField {...props} variant="outlined" fullWidth />
+                  <TextField {...props} variant="outlined" fullWidth/>
                 )}
               />
             </LocalizationProvider>
@@ -111,7 +102,7 @@ export const CarpoolSearch = () => {
             </Button>
           </Grid>
         </Grid>
-        <Divider />
+        <Divider/>
         <Box mt={3}>
           <Typography variant="h5">搜尋結果</Typography>
         </Box>

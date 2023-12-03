@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {Outlet, Link, useLocation, useNavigate} from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
+import {Link, Outlet, useLocation, useNavigate} from "react-router-dom";
+import {Col, Row} from "react-bootstrap";
 import LocalTaxiIcon from '@mui/icons-material/LocalTaxi';
 import Header from "./Header";
 import {Grid} from "@mui/material"; // Import the Header component
@@ -26,57 +26,67 @@ export const RootLayout = () => {
           <Grid container spacing={2} justifyContent="flex-start" alignItems="center">
             <Grid item xs={0.5}> </Grid>
             <Grid item>
-              <Link to="search" style={{ background: '#007BFF', padding: '10px', borderRadius: '10px', marginRight: '10px', width: '50px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <LocalTaxiIcon style={{ fontSize: 36, color: '#ffffff' }} />
+              <Link to="search" style={{
+                background: '#007BFF',
+                padding: '10px',
+                borderRadius: '10px',
+                marginRight: '10px',
+                width: '50px',
+                height: '50px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+                <LocalTaxiIcon style={{fontSize: 36, color: '#ffffff'}}/>
               </Link>
             </Grid>
           </Grid>
-          <hr />
+          <hr/>
           <ul className="nav nav-pills flex-column mb-auto">
             <li id='nav-search' className="nav-item" onClick={onNavClick}>
-              { page === 'nav-search' ? (<Link to="search" className="nav-link active">搜尋共乘：目前在此</Link>)
-                : (<Link to="search" className="nav-link text-white">搜尋共乘</Link>) }
+              {page === 'nav-search' ? (<Link to="search" className="nav-link active">搜尋共乘：目前在此</Link>)
+                : (<Link to="search" className="nav-link text-white">搜尋共乘</Link>)}
             </li>
             <li id='nav-temp' className="nav-item" onClick={onNavClick}>
-              { page === 'nav-temp' ? (<Link to="temp" className="nav-link active">搜尋temp：目前在此</Link>)
-                : (<Link to="temp" className="nav-link text-white">搜尋temp</Link>) }
+              {page === 'nav-temp' ? (<Link to="temp" className="nav-link active">搜尋temp：目前在此</Link>)
+                : (<Link to="temp" className="nav-link text-white">搜尋temp</Link>)}
             </li>
             <li id='nav-launch' className="nav-item" onClick={onNavClick}>
-              { page === 'nav-launch' ? (<Link to="launch" className="nav-link active">發起共乘：目前在此</Link>)
-                : (<Link to="launch" className="nav-link text-white">發起共乘</Link>) }
+              {page === 'nav-launch' ? (<Link to="launch" className="nav-link active">發起共乘：目前在此</Link>)
+                : (<Link to="launch" className="nav-link text-white">發起共乘</Link>)}
             </li>
             <li id='nav-joined' className="nav-item" onClick={onNavClick}>
-              { page === 'nav-joined' ? (<Link to="joined" className="nav-link active">已加入的共乘：目前在此</Link>)
-                : (<Link to="joined" className="nav-link text-white">已加入的共乘</Link>) }
+              {page === 'nav-joined' ? (<Link to="joined" className="nav-link active">已加入的共乘：目前在此</Link>)
+                : (<Link to="joined" className="nav-link text-white">已加入的共乘</Link>)}
             </li>
             <li id='nav-ended' className="nav-item" onClick={onNavClick}>
-              { page === 'nav-ended' ? (<Link to="ended" className="nav-link active">結束的共乘：目前在此</Link>)
-                : (<Link to="ended" className="nav-link text-white">結束的共乘</Link>) }
+              {page === 'nav-ended' ? (<Link to="ended" className="nav-link active">結束的共乘：目前在此</Link>)
+                : (<Link to="ended" className="nav-link text-white">結束的共乘</Link>)}
             </li>
             <li id='nav-Login' className="nav-item" onClick={onNavClick}>
-              { page === 'nav-Login' ? (<Link to="Login" className="nav-link active">登入頁面：目前在此</Link>)
-                : (<Link to="Login" className="nav-link text-white">登入頁面</Link>) }
+              {page === 'nav-Login' ? (<Link to="Login" className="nav-link active">登入頁面：目前在此</Link>)
+                : (<Link to="Login" className="nav-link text-white">登入頁面</Link>)}
             </li>
             <li id='nav-user' className="nav-item" onClick={onNavClick}>
-              { page === 'nav-user' ? (<Link to="user" className="nav-link active">用戶資料：目前在此</Link>)
-                : (<Link to="user" className="nav-link text-white">用戶資料</Link>) }
+              {page === 'nav-user' ? (<Link to="user" className="nav-link active">用戶資料：目前在此</Link>)
+                : (<Link to="user" className="nav-link text-white">用戶資料</Link>)}
             </li>
             <li id='nav-top-up' className="nav-item" onClick={onNavClick}>
-              { page === 'nav-top-up' ? (<Link to="top-up" className="nav-link active">用戶儲值：目前在此</Link>)
-                : (<Link to="top-up" className="nav-link text-white">用戶儲值</Link>) }
+              {page === 'nav-top-up' ? (<Link to="top-up" className="nav-link active">用戶儲值：目前在此</Link>)
+                : (<Link to="top-up" className="nav-link text-white">用戶儲值</Link>)}
             </li>
           </ul>
         </div>
       </Col>
-      
-      
+
+
       <Col xs={9} className="p-0"> {/* Added p-0 to remove default margin */}
         <div className="overflow-auto vh-100"> {/* warp the scrollable object */}
           {/* the Header component */}
-          <Header />
-        
+          <Header/>
+
           {/* The imported carpool page component */}
-          <Outlet />
+          <Outlet/>
         </div>
       </Col>
     </Row>
