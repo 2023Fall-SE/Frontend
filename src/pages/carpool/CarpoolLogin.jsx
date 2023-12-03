@@ -1,45 +1,80 @@
-
-import React, { useState } from 'react';
-import { useNavigate ,Link} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../auth/AuthContext';
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Paper,
+  Link as MuiLink,
+} from '@mui/material';
 
 export const CarpoolLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // Add your login logic here (e.g., API call for authentication)
-
-    // For simplicity, always consider it a successful login for now
-    // In a real application, you'd want to validate the user's credentials
-    // and handle the login process accordingly.
-
-    // Redirect to the '/loginstate/search' page after successful login
-    navigate('/loginstate/Login');
+  const { userToken, login } = useAuth();
+  
+  useEffect( () => {
+    if(userToken !== null)
+      navigate('/user');
+  });
+  
+  const handleLogin = async () => {
+    try {
+      await login(username, password);
+      navigate('/search');
+    } catch (error) {
+      console.error('Error during login:', error);
+      navigate('/Login');
+    }
   };
 
   return (
-    <div>
-      <h2>Welcome to Carpol Service System</h2>
-      <br />
-      <label>
-        E-mail:
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-      </label>
-      <br />
-      <br />
-      <label>
-        Password:
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-      <br />
-      <button onClick={handleLogin}>Sign in</button>
-      <p>If you are not a member,please {' '}
-        <a href="/loginstate/ended" target="_blank" rel="noopener noreferrer">
-          REGISTER HERE
-        </a>
-      </p>
-    </div>
+    <Container maxWidth="sm" sx={{ marginTop: 8 }}>
+      <Paper elevation={3} sx={{ padding: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Welcome to Carpol Service System
+        </Typography>
+        <Box mt={3}>
+          <TextField
+            fullWidth
+            label="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            variant="outlined"
+            margin="normal"
+          />
+        </Box>
+        <Box mt={2}>
+          <TextField
+            fullWidth
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            variant="outlined"
+            margin="normal"
+          />
+        </Box>
+        <Box mt={4}>
+          <Button fullWidth variant="contained" color="primary" onClick={handleLogin}>
+            Sign in
+          </Button>
+        </Box>
+        <Box mt={2} textAlign="center">
+          <Typography>
+            If you are not a member, please{' '}
+            <MuiLink component={Link} to="/loginstate/ended" color="secondary">
+              REGISTER HERE
+            </MuiLink>
+          </Typography>
+        </Box>
+      </Paper>
+    </Container>
   );
 };
 

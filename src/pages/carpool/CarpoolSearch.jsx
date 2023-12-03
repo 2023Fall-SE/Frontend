@@ -1,156 +1,127 @@
-import { useState ,useEffect } from 'react';
-import {NavLink, Outlet, useLoaderData, Link, Form, useNavigate} from "react-router-dom";
-import Carpooljoinevent from './CarpoolJoinEvent';
+import React, { useState } from 'react';
+import CarpoolCard from './CarpoolCard';
+import { useAuth } from "../../auth/AuthContext";
 
 
+import {
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  Paper,
+  Box,
+  Container,
+  Divider,
+} from "@mui/material";
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from 'dayjs';
 
 export const CarpoolSearch = () => {
-
-  const url_join = "http://localhost:8000/join-the-carpool";
-  const url_find = "http://localhost:8000/find-carpool";
-  const url_user = "http://localhost:8000/get-user-info/"; 
-
-  
-
-    // = fetch(url);
+  const { userToken } = useAuth();
   const [isSearchClicked, setIsSearchClicked] = useState(false);
-  const [isJoinedEventclicked, setisJoinedEventClicked] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
+  const [currentDate, setCurrentDate] = useState(dayjs());
   
-  const [start, setStart] = useState('');
-  const [userdata, setuserdata] = useState([]);
-  const [end,setEnd] = useState('');
-  const [currentDate, setCurrentDate] = useState(new Date());
-  
-  /* 
-  User token 
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJleHAiOjE3MDEwOTU5MDN9.BOgYG-Z-S4iiozUzxZ3xsRYQ7g2YuTHseb4ZlyKnl28",
-  "token_type": "bearer"
-   */
-  
-  //  input start point and end point to find carpool
-  const FindCarpool = ( str1,str2) => {
-
-   
-    const urlfindCarpool = url_find + '?startLocation=' + str1 + '&endLocation=' + str2;
-    // 
-
-    fetch( urlfindCarpool, {
-            method: "GET",
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'accept' :  'application/json',
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-           console.log(data);
-           setuserdata(data);
-           
-        })
-        .catch(e => {
-          alert(e);
-          /*When the errors happen*/
-        })
-    
-  }
-
-  
-  useEffect(() => {
-
-    const intervalId = setInterval(() => {
-      setCurrentDate(new Date());
-    }, 1000);
-
-
-    return () => clearInterval(intervalId);
-
-
-  }, []); // Transport one empty tuple as second parameter to insure useEimport Contact, {contactAction} from './page/'ffect as Componet only work once
-  
-  const formattedDate = currentDate.toLocaleTimeString();
-
-  
-  // if click search, then search the carpool
   const onSearchClick = () => {
-    // API call
-      setIsSearchClicked(true);
-      FindCarpool(start,end);
-  }
+    // Simulating API call
+    const apiResult = [
+      {
+        id: 1,
+        launcher: 'John',
+        route : ["台北","桃園","新竹"],
+        num : 3,
+        time: '2021/08/01 12:00',
+        carpool_attribute: "Uber",
+      },
+      {
+        id: 2,
+        launcher: 'Selina',
+        route : ["台北","桃園","新竹"],
+        num: 2,
+        time: '2022/09/01 12:00',
+        carpool_attribute: "Uber",
+      },
+      {
+        id: 3,
+        launcher: '',
+        route : ["淡水","北車","古亭","公館","新店"],
+        num : 3,
+        time: '2021/08/01 12:00',
+        carpool_attribute: "發起人自駕",
+      },
+    ];
+    setIsSearchClicked(true);
+    setSearchResult(apiResult);
+  };
 
   const renderSearchResult = () => {
-
-    // output drive_attribute
-    function printSelfDrive(drive){
-      if(drive){
-        return "自行駕駛";
-      }else{
-        return "Uber駕駛";
-      }
-    }
-
-    // let route add arrow sign 
-    function routelist(routearray){
-      
-      routearray = routearray.substr(1, routearray.length-2);
-      
-      routearray = routearray.replace(/,/g,"->");
-      
-      return routearray;
-
-    }
-    
-    
-    //{isJoinedEventclicked && <p>確定加入</p> && navigate("/" + item.id + "," + item.initiator  ,{replace : true})} 
-   
-    return userdata.map((item) => {
-      
-      return (
-        <div key={item.id}>
-          <p>發起人：{item.initiator}</p>
-          <p>目前剩餘座位：{item.available_seats}</p>
-          <p>共乘方式： { printSelfDrive(item.is_self_drive) }</p>
-          <p>共乘時間：{item.start_time}</p>end
-          <p>共乘路線：{routelist(item.location)}</p>
-          <p>共乘ID:{item.id}</p>
-          <button onClick = {() => {setisJoinedEventClicked([ ...isJoinedEventclicked,{ id : item.id}])} }> 加入共乘</button>
-          {console.log(isJoinedEventclicked)}
-          { isJoinedEventclicked.length > 0 && isJoinedEventclicked[0].id ===  item.id  && <p>確定加入</p> && <Carpooljoinevent itemid={item.id} userid={item.initiator}/>} 
-          <hr />
-        </div>
-      );
-    });
-    
-  }
+    return searchResult.map((item) => (
+      <Box key={item.id} mt={1}>
+        <CarpoolCard item={item} cardType="Active" />
+      </Box>
+    ));
+  };
 
   return (
-    <div>
-      <h1>搜尋共乘</h1>
-      <hr />
-      <p>目前時間 :{formattedDate}</p>
-      <label for="startLocation">上車地點：</label>
-      <input type="text" id="startLocation" name="startLoca rtion" placeholder="請輸入上車地點"
-        onChange={(e) => setStart(e.target.value)}/>
-      <br/>
-      <br />
-      <label for="endLocation">下車地點：</label>
-      <input type="text" id="endLocation" name="endLocation" placeholder="請輸入下車地點"
-        onChange={(e) => setEnd(e.target.value)}
-      />
-      <button onClick={onSearchClick}>搜尋</button><br />
-      <br />
-      <hr />
-      <h2>搜尋結果</h2>
-      { isSearchClicked && userdata.result === 'None'  && <p>查無符合結果</p>}
-      { isSearchClicked && userdata.length > 0 && (renderSearchResult())}
-      <script>
-      </script>
-      <Outlet />
-    </div>
-
-    
+    <Container style={{ marginTop: 20 }}>
+      <Paper elevation={3} className="search-container" style={{ padding: 20 }}>
+        <Typography variant="h4" className="search-title">
+          搜尋共乘
+          user_id: {userToken?userToken.user_id:"未登入"}
+        </Typography>
+        <Divider />
+        <Grid container spacing={2} className="search-form">
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="上車地點"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="下車地點"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+                label="日期和時間"
+                value={currentDate}
+                onChange={(date) => setCurrentDate(date)}
+                renderInput={(props) => (
+                  <TextField {...props} variant="outlined" fullWidth />
+                )}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              onClick={onSearchClick}
+            >
+              搜尋
+            </Button>
+          </Grid>
+        </Grid>
+        <Divider />
+        <Box mt={3}>
+          <Typography variant="h5">搜尋結果</Typography>
+        </Box>
+        {isSearchClicked && searchResult.length === 0 && (
+          <Typography>沒有搜尋結果</Typography>
+        )}
+        {isSearchClicked && searchResult.length > 0 && renderSearchResult()}
+      </Paper>
+    </Container>
   );
 };
-
-
 
 export default CarpoolSearch;
