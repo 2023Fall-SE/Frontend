@@ -121,7 +121,9 @@ export const CarpoolEnded = () => {
           <Typography>沒有搜尋結果</Typography>
         )}
         {joinedEvents.length > 0 && joinedEvents.map((item) => (
-          <CarpoolCard key={item.id} item={item} cardType="Ended" />
+          <Box key={item.id} mt={1}>
+            <CarpoolCard key={item.id} item={item} cardType="Ended" />
+          </Box>
         ))}
       </Paper>
     </Container>
