@@ -4,8 +4,10 @@ import {Box, Button, Card, CardMedia, Container, Divider, Grid, Paper, TextField
 import {Snackbar, Alert} from "@mui/material";
 import UserEdit from './UserEdit';
 import ChangePassword from './ChangePassword';
+import { useAuth } from "../../auth/AuthContext";
 
 export const User = () => {
+	const { userToken } = useAuth();
 	const [userInfo, setUserInfo] = useState({
 		display_name: "",
 		mail: "",
@@ -28,7 +30,9 @@ export const User = () => {
 		const fetchUserInfo = async () => {
 			try {
 				// Perform API call to get user info
-				const userID = 1;
+				if(userToken == null)
+					return null
+				const userID = userToken.user_id;
 				const getUserInfo = `http://127.0.0.1:8000/get-user-info/${userID}`;
 				const response = await fetch(getUserInfo);
 				console.log('fetch userInfo.');

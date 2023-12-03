@@ -5,20 +5,54 @@ import React, { createContext, useContext, useState } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-	const [userInfo, setUserInfo] = useState(null);
+	const [userToken, setUserToken] = useState(null);
 
 	const login = async (username, password) => {
-		// Implement your login logic and fetch user info
-		// Set user info using setUserInfo
+		try {
+			// Make a request to login API endpoint
+			const response = await fetch('http://127.0.0.1:8000/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				},
+				body: new URLSearchParams({
+					grant_type: '',
+					username,
+					password,
+					scope: '',
+					client_id: '',
+					client_secret: '',
+				}),
+			});
+
+			// Check if the request was successful
+			if (!response.ok) {
+				// Handle unsuccessful login (e.g., show an error message)
+				console.error('Login failed:', response.statusText);
+				return;
+			}
+
+			// Parse the response as JSON
+			const data = await response.json();
+
+			// Set user info using setUserToken
+			setUserToken({
+				access_token: data.access_token,
+				token_type: data.token_type,
+				user_id: data.user_id, // Assuming your API returns user_id
+			});
+		} catch (error) {
+			console.error('Error during login:', error);
+		}
 	};
 
 	const logout = () => {
 		// Implement logout logic and clear user info
-		setUserInfo(null);
+		setUserToken(null);
 	};
 
 	return (
-		<AuthContext.Provider value={{ userInfo, login, logout }}>
+		<AuthContext.Provider value={{ userToken, login, logout }}>
 			{children}
 		</AuthContext.Provider>
 	);
