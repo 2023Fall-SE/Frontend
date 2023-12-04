@@ -143,8 +143,7 @@ export const User = () => {
   }
 
   const handleVerifyLicenseClick = () => {
-    // Navigate to /verifyLicense or show the verification module
-    // This part will be implemented once the decision is made
+    navigate('/upload');
   };
   return (
     <Container style={{marginTop: 20}}>

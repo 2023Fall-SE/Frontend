@@ -85,8 +85,10 @@ export const CarpoolLaunch = () => {
       alert('欄位不可為空');
     else if (otherLocations.includes(otherLocate)) 
       alert('已存在此地點');
-    else
+    else {
       setOtherLocations([...otherLocations, otherLocate]);
+      setOtherLocate("");
+    }
   };
 
   useEffect(() => {

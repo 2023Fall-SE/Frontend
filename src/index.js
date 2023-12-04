@@ -15,6 +15,7 @@ import {Carpooljoinevent} from './pages/carpool/CarpoolJoinEvent';
 import {User} from './pages/user/User'
 import {Register} from "./pages/user/Register"
 import {Login} from "./pages/user/Login"
+import {UploadLicense} from "./pages/user/UploadLicense"
 //
 import {TopUp} from './pages/wallet/TopUp'
 // Auth
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       {path: '/top-up', element: <TopUp/>},
       {path: '/Login', element: <Login />},
       {path: '/Register', element: <Register />},
+      {path: '/upload', element: <UploadLicense />},
 
       {
         path: '/loginstate', element: <RootLayout/>, children: [
