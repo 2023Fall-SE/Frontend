@@ -13,7 +13,7 @@ export const AuthProvider = ({children}) => {
   useEffect(() => {
     const storedToken = cookies.userToken;
     console.log(storedToken);
-    if (storedToken) {
+    if (storedToken && storedToken.hasOwnProperty("user_id")) {
       setUserToken(storedToken);
     }
     setIsLoading(false);
@@ -22,7 +22,7 @@ export const AuthProvider = ({children}) => {
   const login = async (username, password) => {
     try {
       // Make a request to login API endpoint
-      const response = await fetch('http://127.0.0.1:8000/login', {
+      const response = await fetch('https://carpool-service-test-cvklf2agbq-de.a.run.app/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -36,26 +36,38 @@ export const AuthProvider = ({children}) => {
           client_secret: '',
         }),
       });
+      
 
       // Check if the request was successful
       if (!response.ok) {
-        // Handle unsuccessful login (e.g., show an error message)
-        console.error('Login failed:', response.statusText);
-        return;
+        const errorResponse = await response.json(); // Assuming the server returns error details as JSON
+        const data = errorResponse.detail;
+        console.log(data)
+        if(typeof data === 'string'){
+          throw new Error(`${response.status}\n${data}`);
+        } else if (Array.isArray(data)) {
+          const errorLines = data.map(item => `${item.type}: ${item.msg}`)
+          throw new Error(`${response.status}\n` + errorLines.join('\n'));
+        } else {
+          throw new Error(errorResponse.error)
+        }
+      } else {
+        // Parse the response as JSON
+        const data = await response.json();
+        // Set user info including user_id using setUserToken and save it to cookies
+        setIsLoading(true);
+
+        const newUserToken = {
+          token: data.Token,
+          user_id: data.user_id,
+        };
+        setUserToken(newUserToken);
+        setCookie('userToken', JSON.stringify(newUserToken), {path: '/'});
+
+        setIsLoading(false);
       }
-
-      // Parse the response as JSON
-      const data = await response.json();
-
-      // Set user info including user_id using setUserToken and save it to cookies
-      const newUserToken = {
-        token: data.Token,
-        user_id: data.user_id,
-      };
-      setUserToken(newUserToken);
-      setCookie('userToken', JSON.stringify(newUserToken), {path: '/'});
     } catch (error) {
-      console.error('Error during login:', error);
+      throw error
     }
   };
 

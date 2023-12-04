@@ -20,7 +20,7 @@ export const CarpoolLogin = () => {
       await login(username, password);
       navigate('/search');
     } catch (error) {
-      console.error('Error during login:', error);
+      alert(error);
       navigate('/Login');
     }
   };
