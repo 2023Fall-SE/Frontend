@@ -54,7 +54,7 @@ export const CarpoolJoined = () => {
           withCredentials: true,
           credentials: 'include',
           headers: new Headers({
-            'Authorization': `Bearer ${userToken.token.access_token}`,
+            'Authorization': `Bearer ${userToken.access_token}`,
           })
         });
         const data = await response.json();
@@ -67,6 +67,7 @@ export const CarpoolJoined = () => {
             num: item.number_of_people,
             time: item.start_time,
             is_ended: item.end_time != null,
+            available_seats: item.available_seats,
             carpool_attribute: item.is_self_drive ? "發起人自駕" : "非自駕",
             "共乘費用": item.id * 30,
           }));
@@ -121,7 +122,7 @@ export const CarpoolJoined = () => {
         <Typography variant="h4" className="search-title" style={{marginBottom: 20}}>
           已加入的共乘
         </Typography>
-        <Divider/>
+        <hr />
 
         <Box style={{marginTop: 10}}>
           {joinedEvents.length === 0 && (

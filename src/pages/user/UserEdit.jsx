@@ -37,7 +37,7 @@ const UserEdit = ({userInfo, onCancel, handleSuccess}) => {
           withCredentials: true,
           credentials: 'include',
           headers: new Headers({
-            'Authorization': `Bearer ${userToken.token.access_token}`,
+            'Authorization': `Bearer ${userToken.access_token}`,
             'Content-Type': 'application/json'
           }),
           body: JSON.stringify({

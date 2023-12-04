@@ -47,9 +47,9 @@ export const RootLayout = () => {
               {page === 'nav-search' ? (<Link to="search" className="nav-link active">搜尋共乘：目前在此</Link>)
                 : (<Link to="search" className="nav-link text-white">搜尋共乘</Link>)}
             </li>
-            <li id='nav-temp' className="nav-item" onClick={onNavClick}>
-              {page === 'nav-temp' ? (<Link to="temp" className="nav-link active">搜尋temp：目前在此</Link>)
-                : (<Link to="temp" className="nav-link text-white">搜尋temp</Link>)}
+            <li id='nav-searchUI' className="nav-item" onClick={onNavClick}>
+              {page === 'nav-searchUI' ? (<Link to="searchUI" className="nav-link active">搜尋temp：目前在此</Link>)
+                : (<Link to="searchUI" className="nav-link text-white">搜尋temp</Link>)}
             </li>
             <li id='nav-launch' className="nav-item" onClick={onNavClick}>
               {page === 'nav-launch' ? (<Link to="launch" className="nav-link active">發起共乘：目前在此</Link>)

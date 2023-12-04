@@ -16,32 +16,35 @@ export const CarpoolEnded = () => {
   const mockResult = [
     {
       id: 1,
-      launcher: 'John',
+      launcher: '測試資料一',
       route: ["台北", "桃園", "新竹"],
       num: 3,
       time: '2021/08/01 12:00',
       is_ended: true,
       carpool_attribute: "Uber",
+      available_seats: 99,
       "共乘費用": 30,
     },
     {
       id: 2,
-      launcher: 'Selina',
+      launcher: '測試資料二',
       route: ["台北", "桃園", "新竹"],
       num: 2,
       time: '2022/09/01 12:00',
       is_ended: true,
       carpool_attribute: "Uber",
+      available_seats: 99,
       "共乘費用": 70,
     },
     {
       id: 3,
-      launcher: '',
+      launcher: '測試資料三',
       route: ["淡水", "北車", "古亭", "公館", "新店"],
       num: 3,
       time: '2021/08/01 12:00',
       is_ended: true,
       carpool_attribute: "發起人自駕",
+      available_seats: 99,
       "共乘費用": 60,
     },
   ];
@@ -56,7 +59,7 @@ export const CarpoolEnded = () => {
           withCredentials: true,
           credentials: 'include',
           headers: new Headers({
-            'Authorization': `Bearer ${userToken.token.access_token}`,
+            'Authorization': `Bearer ${userToken.access_token}`,
           })
         });
         const data = await response.json();
@@ -73,6 +76,8 @@ export const CarpoolEnded = () => {
             "共乘費用": item.id * 30,
           }));
           setEndedEvents(formattedData);
+        } else if (data.result === "None") {
+          setEndedEvents([]);
         } else {
           setEndedEvents(mockResult);
         }
@@ -94,7 +99,7 @@ export const CarpoolEnded = () => {
           withCredentials: true,
           credentials: 'include',
           headers: new Headers({
-            'Authorization': `Bearer ${userToken.token.access_token}`,
+            'Authorization': `Bearer ${userToken.access_token}`,
             'Content-Type': 'application/json'
           }),
         });
@@ -143,7 +148,7 @@ export const CarpoolEnded = () => {
         <Typography variant="h4" className="search-title" style={{marginBottom: 20}}>
           已結束的共乘
         </Typography>
-        <Divider/>
+        <hr />
 
         <Box mt={3} sx={{marginLeft: 2}}>
           <Grid container>
@@ -173,7 +178,7 @@ export const CarpoolEnded = () => {
             <Button variant="contained" color="success" onClick={() => fetchEndedEvents()}>
               重新載入
             </Button>
-            <Button variant="contained" color="inherit" onClick={() => fetchEndedEvents(mockResult)}>
+            <Button variant="contained" color="inherit" onClick={() => setEndedEvents(mockResult)}>
               載入測試資料
             </Button>
             <Button variant="contained" color="warning">

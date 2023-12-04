@@ -31,6 +31,7 @@ export const Login = () => {
         <Typography variant="h4" gutterBottom>
           Welcome to Carpol Service System
         </Typography>
+        <hr />
         <Box mt={3}>
           <TextField
             fullWidth

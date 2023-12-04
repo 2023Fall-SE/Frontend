@@ -66,8 +66,9 @@ export const Register = () => {
     <Container maxWidth="sm" sx={{marginTop: 8}}>
       <Paper elevation={3} sx={{padding: 4}}>
         <Typography variant="h4" gutterBottom>
-          Welcome to Carpol Service System
+          Register
         </Typography>
+        <hr />
         <Box mt={3}>
           <TextField
             fullWidth

@@ -3,6 +3,7 @@ import {Box, Button, Container, Divider, Grid, Paper, Typography} from "@mui/mat
 import {useAuth} from "../../auth/AuthContext";
 
 export const TopUp = () => {
+  const url = "https://carpool-service-test-cvklf2agbq-de.a.run.app/";
   const {isLoading, userToken} = useAuth();
   const [carpoolMoney, setCarpoolMoney] = useState(0);
 
@@ -10,14 +11,13 @@ export const TopUp = () => {
     if (!isLoading && userToken) {
       try {
         const userID = userToken.user_id;
-        const url = "https://carpool-service-test-cvklf2agbq-de.a.run.app/";
         const searchBalance = url+`/payment/${userID}`;
         const response = await fetch(searchBalance, {
           method: 'get',
           withCredentials: true,
           credentials: 'include',
           headers: new Headers({
-            'Authorization': `Bearer ${userToken.token.access_token}`,
+            'Authorization': `Bearer ${userToken.access_token}`,
             'Content-Type': 'application/json'
           }),
         });
@@ -41,14 +41,14 @@ export const TopUp = () => {
 
   const token_check = async () => {
     try {
-      const tokenCheck = `http://127.0.0.1:8000/token-check`;
+      const tokenCheck = url+`/token-check`;
       const response = await fetch(tokenCheck, {
         method: 'post',
         withCredentials: true,
         credentials: 'include',
         headers: new Headers({
-          'Authorization': `Bearer ${userToken.token.access_token}`,
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Authorization': `Bearer ${userToken.access_token}`,
+          'Content-Type': 'application/json'
         })
       });
     } catch (error) {
@@ -73,7 +73,7 @@ export const TopUp = () => {
         <Typography variant="h4" style={{marginBottom: 20}}>
           儲值Carpool-Money
         </Typography>
-        <Divider/>
+        <hr />
         <Box mt={3} sx={{marginLeft: 2}}>
           <Grid container>
             <Grid item>

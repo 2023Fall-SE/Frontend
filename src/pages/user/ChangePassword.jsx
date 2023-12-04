@@ -1,8 +1,10 @@
 // ChangePassword.jsx
 import React, {useState} from 'react';
 import {Alert, Box, Button, Grid, Snackbar, TextField} from "@mui/material";
+import {useAuth} from "../../auth/AuthContext";
 
 const ChangePassword = ({onCancel, handleSuccess}) => {
+  const { isLoading, userToken } = useAuth();
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
     newPassword: '',
@@ -34,6 +36,11 @@ const ChangePassword = ({onCancel, handleSuccess}) => {
         const updateUserInfo = url+"/update-user-info";
         const response = await fetch(updateUserInfo, {
           method: 'POST',
+          headers: new Headers({
+            'Authorization': `Bearer ${userToken.access_token}`,
+            'Content-Type': 'application/json',
+            'accept': 'application/json',
+          }),
           body: JSON.stringify({
             /*
             // to be updated

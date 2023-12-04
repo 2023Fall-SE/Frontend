@@ -58,7 +58,8 @@ export const AuthProvider = ({children}) => {
         setIsLoading(true);
 
         const newUserToken = {
-          token: data.Token,
+          access_token: data.access_token,
+          token_type: data.token_type,
           user_id: data.user_id,
         };
         setUserToken(newUserToken);

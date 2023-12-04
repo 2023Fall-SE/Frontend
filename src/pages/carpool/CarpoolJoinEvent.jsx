@@ -32,7 +32,7 @@ export const Carpooljoinevent = ({itemid, userid, route}) => {
 
     const target = {
       "event_id": itemid,
-      "user_id": userid,
+      "user_id": userToken.user_id,
       "start_loc": route[0],
       "end_loc": route[route.length-1],
     }
@@ -43,7 +43,7 @@ export const Carpooljoinevent = ({itemid, userid, route}) => {
       withCredentials: true,
       credentials: 'include',
       headers: new Headers({
-        'Authorization': `Bearer ${userToken.token.access_token}`,
+        'Authorization': `Bearer ${userToken.access_token}`,
         'accept': 'application/json',
         'Content-Type': 'application/json' // <-- Specifying the Content-Type
       }), 
@@ -70,24 +70,24 @@ export const Carpooljoinevent = ({itemid, userid, route}) => {
   const Eventhandle = () => {
 
     return (
-      <dev>
+      <div>
         {Eventdata.detail === "位子不夠" && <h2>位子不夠:無法加入行程</h2>}
         {Eventdata.detail === "無此Event" && <h2>找不到此行程</h2>}
 
         {Eventdata.detail === "使用者已在此Event" && <h2> 您已在此Carpool行程</h2>}
         {Eventdata.result === "success" && <h2>成功加入行程</h2>}
-      </dev>
+      </div>
     );
   }
 
 
   return (
-    <dev>
+    <div>
       <h2>加入結果</h2>
       <br/>
       {Event && (Eventhandle())}
       <p></p>
-    </dev>
+    </div>
 
   );
 }

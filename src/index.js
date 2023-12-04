@@ -5,12 +5,12 @@ import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import {RootLayout} from './layouts/RootLayout';
 // Carpool
+import {CarpoolSearchUI} from './pages/carpool/CarpoolSearchUI';
 import {CarpoolSearch} from './pages/carpool/CarpoolSearch';
 import {CarpoolLaunch} from './pages/carpool/CarpoolLaunch';
 import {CarpoolJoined} from './pages/carpool/CarpoolJoined';
 import {CarpoolEnded} from './pages/carpool/CarpoolEnded';
 import {Carpooljoinevent} from './pages/carpool/CarpoolJoinEvent';
-import {Temp} from './pages/carpool/Temp';
 // User
 import {User} from './pages/user/User'
 import {Register} from "./pages/user/Register"
@@ -26,12 +26,12 @@ const router = createBrowserRouter([
   {
     path: '/', element: <RootLayout/>, children: [
       {path: '/search', element: <CarpoolSearch/>},
+      {path: '/searchUI', element: <CarpoolSearchUI/>},
       {path: '/launch', element: <CarpoolLaunch/>},
       {path: '/joined', element: <CarpoolJoined/>},
       {path: '/ended', element: <CarpoolEnded/>},
       {path: '/user', element: <User/>},
       {path: '/top-up', element: <TopUp/>},
-      {path: '/temp', element: <Temp/>},
       {path: '/Login', element: <Login />},
       {path: '/Register', element: <Register />},
 

@@ -55,7 +55,7 @@ export const User = () => {
             withCredentials: true,
             credentials: 'include',
             headers: new Headers({
-              'Authorization': `Bearer ${userToken.token.access_token}`,
+              'Authorization': `Bearer ${userToken.access_token}`,
               'Content-Type': 'application/x-www-form-urlencoded'
             })
           });
@@ -85,7 +85,7 @@ export const User = () => {
             withCredentials: true,
             credentials: 'include',
             headers: new Headers({
-              'Authorization': `Bearer ${userToken.token.access_token}`,
+              'Authorization': `Bearer ${userToken.access_token}`,
               'Content-Type': 'application/x-www-form-urlencoded'
             })
           });
@@ -152,7 +152,7 @@ export const User = () => {
         <Typography variant="h4" style={{marginBottom: 20}}>
           用戶資料
         </Typography>
-        <Divider/>
+        <hr />
 
         <Box>
           {!isEditing && !isChangingPassword && (
