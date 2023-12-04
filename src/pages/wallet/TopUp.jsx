@@ -10,7 +10,8 @@ export const TopUp = () => {
     if (!isLoading && userToken) {
       try {
         const userID = userToken.user_id;
-        const searchBalance = `http://127.0.0.1:8000/payment/${userID}`;
+        const url = "https://carpool-service-test-cvklf2agbq-de.a.run.app/";
+        const searchBalance = url+`/payment/${userID}`;
         const response = await fetch(searchBalance, {
           method: 'get',
           withCredentials: true,

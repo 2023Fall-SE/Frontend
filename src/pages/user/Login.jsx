@@ -3,7 +3,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {useAuth} from '../../auth/AuthContext';
 import {Box, Button, Container, Link as MuiLink, Paper, TextField, Typography,} from '@mui/material';
 
-export const CarpoolLogin = () => {
+export const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -34,6 +34,7 @@ export const CarpoolLogin = () => {
         <Box mt={3}>
           <TextField
             fullWidth
+            aria-required={true}
             label="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -44,6 +45,7 @@ export const CarpoolLogin = () => {
         <Box mt={2}>
           <TextField
             fullWidth
+            aria-required={true}
             label="Password"
             type="password"
             value={password}
@@ -60,7 +62,7 @@ export const CarpoolLogin = () => {
         <Box mt={2} textAlign="center">
           <Typography>
             If you are not a member, please{' '}
-            <MuiLink component={Link} to="/loginstate/ended" color="secondary">
+            <MuiLink component={Link} to="/Register" color="secondary">
               REGISTER HERE
             </MuiLink>
           </Typography>
@@ -70,4 +72,4 @@ export const CarpoolLogin = () => {
   );
 };
 
-export default CarpoolLogin;
+export default Login;

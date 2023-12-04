@@ -30,7 +30,8 @@ const UserEdit = ({userInfo, onCancel, handleSuccess}) => {
     if (isFormValid()) {
       try {
         const userID = userToken.user_id;
-        const updateUserInfo = "http://127.0.0.1:8000/update-user-info"
+        const url = "https://carpool-service-test-cvklf2agbq-de.a.run.app/";
+        const updateUserInfo = url+"/update-user-info"
         const response = await fetch(updateUserInfo, {
           method: 'put',
           withCredentials: true,

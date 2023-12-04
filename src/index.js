@@ -4,18 +4,22 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import {RootLayout} from './layouts/RootLayout';
+// Carpool
 import {CarpoolSearch} from './pages/carpool/CarpoolSearch';
 import {CarpoolLaunch} from './pages/carpool/CarpoolLaunch';
 import {CarpoolJoined} from './pages/carpool/CarpoolJoined';
 import {CarpoolEnded} from './pages/carpool/CarpoolEnded';
 import {Carpooljoinevent} from './pages/carpool/CarpoolJoinEvent';
-import {CarpoolLogin} from './pages/carpool/CarpoolLogin';
-
-// import { CookiesProvider, useCookies } from "react-cookie";
-import {User} from './pages/user/User'
-import {TopUp} from './pages/wallet/TopUp'
 import {Temp} from './pages/carpool/Temp';
+// User
+import {User} from './pages/user/User'
+import {Register} from "./pages/user/Register"
+import {Login} from "./pages/user/Login"
+//
+import {TopUp} from './pages/wallet/TopUp'
+// Auth
 import {AuthProvider} from "./auth/AuthContext";
+
 
 
 const router = createBrowserRouter([
@@ -28,7 +32,8 @@ const router = createBrowserRouter([
       {path: '/user', element: <User/>},
       {path: '/top-up', element: <TopUp/>},
       {path: '/temp', element: <Temp/>},
-      {path: '/Login', element: <CarpoolLogin/>},
+      {path: '/Login', element: <Login />},
+      {path: '/Register', element: <Register />},
 
       {
         path: '/loginstate', element: <RootLayout/>, children: [
@@ -37,7 +42,7 @@ const router = createBrowserRouter([
           {path: '/loginstate/joined', element: <CarpoolJoined/>},
           {path: '/loginstate/ended', element: <CarpoolEnded/>},
           {path: '/loginstate/:id', element: < Carpooljoinevent/>},
-          {path: '/loginstate/Login', element: <CarpoolLogin/>}
+          {path: '/loginstate/Login', element: <Login />}
         ]
       },
     ]

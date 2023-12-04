@@ -8,6 +8,8 @@ export const CarpoolEnded = () => {
   const {isLoading, userToken} = useAuth();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [endedEvents, setEndedEvents] = useState([]);
+  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/';
+  // const url = 'http://127.0.0.1:8000';
 
   const [carpoolMoney, setCarpoolMoney] = useState(null);
 
@@ -48,7 +50,7 @@ export const CarpoolEnded = () => {
     if (!isLoading && userToken) {
       try {
         const userID = userToken.user_id;
-        const searchEndedEvent = `http://127.0.0.1:8000/search-joined-event?user_id=${userID}`;
+        const searchEndedEvent = url+`/search-joined-event?user_id=${userID}`;
         const response = await fetch(searchEndedEvent, {
           method: 'get',
           withCredentials: true,
@@ -86,7 +88,7 @@ export const CarpoolEnded = () => {
     if (!isLoading && userToken) {
       try {
         const userID = userToken.user_id;
-        const searchBalance = `http://127.0.0.1:8000/payment/${userID}`;
+        const searchBalance = url+`/payment/${userID}`;
         const response = await fetch(searchBalance, {
           method: 'get',
           withCredentials: true,

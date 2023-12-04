@@ -8,6 +8,8 @@ export const CarpoolJoined = () => {
   const {isLoading, userToken} = useAuth();
   const [joinedEvents, setJoinedEvents] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/';
+  // const url = 'http://127.0.0.1:8000';
 
   const mockResult = [
     {
@@ -46,7 +48,7 @@ export const CarpoolJoined = () => {
     if (!isLoading && userToken) {
       try {
         const userID = userToken.user_id;
-        const searchJoinedEvent = `http://127.0.0.1:8000/search-joined-event?user_id=${userID}`;
+        const searchJoinedEvent = url+`/search-joined-event?user_id=${userID}`;
         const response = await fetch(searchJoinedEvent, {
           method: 'get',
           withCredentials: true,

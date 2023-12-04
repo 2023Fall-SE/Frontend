@@ -54,7 +54,9 @@ export const Temp = () => {
 
   //  input start point and end point to find carpool
   const FindCarpool = (str1, str2) => {
-    const url_find = "http://localhost:8000/find-carpool";
+    const url = "https://carpool-service-test-cvklf2agbq-de.a.run.app/";
+    const url_find = url+"find-carpool";
+    // const url_find = "http://localhost:8000/find-carpool";
     const urlfindCarpool = url_find + '?startLocation=' + str1 + '&endLocation=' + str2;
     
     fetch(urlfindCarpool, {

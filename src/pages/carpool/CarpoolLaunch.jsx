@@ -20,7 +20,9 @@ export const CarpoolLaunch = () => {
     setSelectedDate(date);
   };
 
-  const url_initiate_carpool = "http://localhost:8000/initiate-carpool-event-ui"
+  const url="https://carpool-service-test-cvklf2agbq-de.a.run.app/"
+  const url_initiate_carpool = url+"/initiate-carpool-event-ui"
+  // const url_initiate_carpool = "http://localhost:8000/initiate-carpool-event-ui"
 
 
   const PrintOtherLocation = () => {

@@ -4,9 +4,13 @@ import {useAuth} from "../../auth/AuthContext";
 
 
 export const Carpooljoinevent = ({itemid, userid, route}) => {
+  
+  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/';
+  const url_get_usr_info = url+"/get-user-info/";
+  const url_join_the_carpool = url+"/join-the-carpool"
+  // const url_get_usr_info = "http://localhost:8000/get-user-info/";
+  // const url_join_the_carpool = "http://localhost:8000/join-the-carpool"
 
-  const url_get_usr_info = "http://localhost:8000/get-user-info/";
-  const url_join_the_carpool = "http://localhost:8000/join-the-carpool"
   //loader function 
   const {userToken, isLoading} = useAuth();
   const [JoinedEvent, setJoinedevent] = useState(false);
