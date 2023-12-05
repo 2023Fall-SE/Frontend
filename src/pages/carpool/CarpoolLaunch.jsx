@@ -89,7 +89,16 @@ export const CarpoolLaunch = () => {
       setOtherLocations([...otherLocations, otherLocate]);
       setOtherLocate("");
     }
-  };
+  };  
+  const HandleResultOfReturn= () => {
+  
+    return(
+      <dev>
+        {launchResult.detail === '無駕照' && <p>您還沒認證駕照,請改用非自駕或認證駕照</p>}
+        { launchResult.event_id && <p>發起成功 行程id為 : { launchResult.event_id } </p>}
+      </dev>
+    )
+  }
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -235,6 +244,7 @@ export const CarpoolLaunch = () => {
           </Button>
         </form>
       </Paper>
+      {HandleResultOfReturn()}
     </Container>
   )
 };
