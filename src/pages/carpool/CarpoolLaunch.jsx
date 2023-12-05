@@ -21,7 +21,7 @@ import dayjs from "dayjs";
 export const CarpoolLaunch = () => {
   const { isLoaded, userToken} = useAuth();
   const [currentDate, setCurrentDate] = useState(dayjs());
-  const [launchCarpool, setLaunchCarpool] = useState(false);
+  //const [launchCarpool, setLaunchCarpool] = useState(false);
   const [launchResult, setLaunchResult] = useState('');
   const [numberOfPeople, setNumberOfPeople] = useState('');
   const [isSelfDrive, setIsSelfDrive] = useState(true);
@@ -96,6 +96,7 @@ export const CarpoolLaunch = () => {
       <dev>
         {launchResult.detail === '無駕照' && <p>您還沒認證駕照,請改用非自駕或認證駕照</p>}
         { launchResult.event_id && <p>發起成功 行程id為 : { launchResult.event_id } </p>}
+        { launchResult.detail === '日期輸入錯誤' && <p> 日期輸入錯誤, 請重新選取</p>}
       </dev>
     )
   }

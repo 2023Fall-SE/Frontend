@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   {
     path: '/', element: <RootLayout/>, children: [
       {path: '/search', element: <CarpoolSearch/>},
-      {path: '/searchUI', element: <CarpoolSearchUI/>},
+      //{path: '/searchUI', element: <CarpoolSearchUI/>},
       {path: '/launch', element: <CarpoolLaunch/>},
       {path: '/joined', element: <CarpoolJoined/>},
       {path: '/ended', element: <CarpoolEnded/>},

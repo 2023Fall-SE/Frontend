@@ -14,33 +14,11 @@ export const CarpoolSearchUI = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [currentDate, setCurrentDate] = useState(dayjs());
 
+  
   const onSearchClick = () => {
     // Simulating API call
     const apiResult = [
-      {
-        id: 1,
-        launcher: 'John',
-        route: ["台北", "桃園", "新竹"],
-        num: 3,
-        time: '2021/08/01 12:00',
-        carpool_attribute: "Uber",
-      },
-      {
-        id: 2,
-        launcher: 'Selina',
-        route: ["台北", "桃園", "新竹"],
-        num: 2,
-        time: '2022/09/01 12:00',
-        carpool_attribute: "Uber",
-      },
-      {
-        id: 3,
-        launcher: '',
-        route: ["淡水", "北車", "古亭", "公館", "新店"],
-        num: 3,
-        time: '2021/08/01 12:00',
-        carpool_attribute: "發起人自駕",
-      },
+      
     ];
     setIsSearchClicked(true);
     setSearchResult(apiResult);
