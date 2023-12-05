@@ -19,6 +19,8 @@ import UserEdit from './UserEdit';
 import ChangePassword from './ChangePassword';
 import {useAuth} from "../../auth/AuthContext";
 
+import { pusher, beamsClient } from "../../pusher_util";
+
 export const User = () => {
   const {isLoading, userToken, logout} = useAuth();
   const navigate = useNavigate();
@@ -140,6 +142,15 @@ export const User = () => {
 
   const handleLogoutClick = () => {
     logout();
+
+    //clear and stop the pusher
+    beamsClient.clearAllState()
+    .then(() => console.log('Beams state has been cleared'))
+    .catch(e => console.error('Could not clear Beams state', e));
+
+    beamsClient.stop()
+    .then(() => console.log('Beams has been stoped'))
+    .catch(console.error);
   }
 
   const handleVerifyLicenseClick = () => {

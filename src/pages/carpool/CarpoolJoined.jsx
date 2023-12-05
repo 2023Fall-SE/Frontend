@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useAuth} from "../../auth/AuthContext";
-import {Box, Container, Divider, Paper, Typography} from "@mui/material";
+import {Box, Container, Divider, Paper, Typography, Button} from "@mui/material";
 import CarpoolCard from "./CarpoolCard";
-
 
 export const CarpoolJoined = () => {
   const {isLoading, userToken} = useAuth();
@@ -123,7 +122,6 @@ export const CarpoolJoined = () => {
           已加入的共乘
         </Typography>
         <hr />
-
         <Box style={{marginTop: 10}}>
           {joinedEvents.length === 0 && (
             <Typography>沒有搜尋結果</Typography>

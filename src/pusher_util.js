@@ -1,14 +1,69 @@
-//pusher
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
-export const pusher = () => {
-  const group = 'hello'
-  const beamsClient = new PusherPushNotifications.Client({
-    instanceId: 'f6cd0c10-192e-4b49-9851-980cc7a0ab3d',
-  });
+export const beamsClient = new PusherPushNotifications.Client({
+  instanceId: 'f6cd0c10-192e-4b49-9851-980cc7a0ab3d',
+});
 
-  beamsClient.start()
-    .then(() => beamsClient.addDeviceInterest(group))
-    .then(() => console.log('Successfully registered and subscribed!'))
-    .catch(console.error);
+export const pusher = (userid, token) => {
+  const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
+    url: "http://127.0.0.1:8080/pusher/beams-auth",
+    queryParams: {
+      "userid": userid, // URL query params your auth endpoint needs
+    },
+    headers: {
+      "Authorization": `Bearer ${token}`, // Headers your auth endpoint needs
+    },
+  });
+  beamsClient
+  .start()
+  .then(() => beamsClient.setUserId(userid, beamsTokenProvider))
+  .catch(console.error);
+
 }
+
+export const notify = async (userid) => {
+  const url = `http://127.0.0.1:8080/pusher/send-notification/${userid}`
+  const response = await fetch(url, {
+    method: 'get',
+  });
+  const data = await response.json();
+  console.log(data)
+}
+
+export const pusher_checkmatchuser = (currentUserId) => {
+  beamsClient
+  .getUserId()
+  .then((userId) => {
+    // Check if the Beams user matches the user that is currently logged in
+    if (userId !== currentUserId) {
+      // Unregister for notifications
+      return beamsClient.stop();
+    }
+  })
+  .catch(console.error);
+}
+
+//Activate and send notifications to users in ./pages/...
+//pusher() should be called when user logs in
+//notify() should be called when event ends or dismisses
+
+
+//The following code can be tested by adding those to the CarpoolJoined.jsx
+//Usage: 1. Press the "啟動Pusher" button 2. Press the "測試通知" button
+//Result: The notification with the content {'title': 'Test_title', 'body': 'Test_body'},
+//the content can be modified in the "send_notification" api in main.py
+
+// CarpoolJoined.jsx
+// import { pusher, beamsClient, notify } from "../../pusher_util";
+{/* <Button
+onClick={() => pusher(userToken.user_id.toString(), userToken.access_token)}
+>
+啟動Pusher
+
+</Button>
+<Button
+onClick={() => notify(userToken.user_id)}
+>
+測試通知
+</Button> */}
+
