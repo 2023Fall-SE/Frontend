@@ -57,9 +57,10 @@ export const UploadLicense = () => {
 
       if (response.ok) {
         const result = await response.json();
-        navigate('upload');
+        navigate('/user');
       } else {
         console.error("Failed to upload or update license image");
+        alert("Failed to upload or update license image");
       }
     } catch (error) {
       console.error("Error uploading or updating license image:", error);
@@ -147,6 +148,7 @@ export const UploadLicense = () => {
                   variant="contained"
                   color="primary"
                   disabled={uploading}
+                  onClick={() => navigate('/user')}
                 >
                   Done
                 </Button>
