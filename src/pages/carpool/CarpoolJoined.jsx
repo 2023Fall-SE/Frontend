@@ -13,7 +13,7 @@ export const CarpoolJoined = () => {
   const mockResult = [
     {
       id: 1,
-      launcher: 'John',
+      initiator: 'John',
       route: ["台北", "桃園", "新竹"],
       num: 3,
       time: '2021/08/01 12:00',
@@ -23,7 +23,7 @@ export const CarpoolJoined = () => {
     },
     {
       id: 2,
-      launcher: 'Selina',
+      initiator: 'Selina',
       route: ["台北", "桃園", "新竹"],
       num: 2,
       time: '2022/09/01 12:00',
@@ -33,7 +33,7 @@ export const CarpoolJoined = () => {
     },
     {
       id: 3,
-      launcher: '',
+      initiator: '',
       route: ["淡水", "北車", "古亭", "公館", "新店"],
       num: 3,
       time: '2021/08/01 12:00',
@@ -57,22 +57,24 @@ export const CarpoolJoined = () => {
           })
         });
         const data = await response.json();
-
+        console.log(data);
         if (data.result !== "None" && Object.keys(data).length > 0) {
           const formattedData = data.map(item => ({
             id: item.id,
-            launcher: item.initiator.toString(),
+            initiator: item.initiator.toString(),
             route: item.location.split(',').filter(part => part.trim() !== ''),
+            joiner: item.joiner,
             num: item.number_of_people,
             time: item.start_time,
             is_ended: item.end_time != null,
             available_seats: item.available_seats,
             carpool_attribute: item.is_self_drive ? "發起人自駕" : "非自駕",
-            "共乘費用": item.id * 30,
+            status: item.joiner,
           }));
           setJoinedEvents(formattedData);
         } else {
-          setJoinedEvents(mockResult);
+          // setJoinedEvents(mockResult);
+          setJoinedEvents([]);
         }
       } catch (error) {
         console.error('Error fetching event information:', error);
@@ -93,28 +95,6 @@ export const CarpoolJoined = () => {
 
   const formattedDate = currentDate.toLocaleTimeString();
 
-  // API call
-  const api = [
-    {
-      id: 1,
-      launcher: 'John',
-      route: '台北',
-      time: '2021/08/01 12:00',
-      num: 3,
-      cost: 500,
-      carpool_attribute: "發起人自駕",
-    },
-    {
-      id: 2,
-      launcher: 'John',
-      route: '台北',
-      time: '2021/08/01 12:00',
-      num: 4,
-      cost: 1000,
-      carpool_attribute: "發起人自駕",
-    },
-  ];
-
   return (
     <Container style={{marginTop: 20}}>
       <Paper elevation={3} className="search-container" style={{padding: 20}}>
@@ -129,7 +109,7 @@ export const CarpoolJoined = () => {
           {joinedEvents.length > 0 && joinedEvents.map((item) => (
             item.is_ended == false &&
             <Box key={item.id} mt={1}>
-              <CarpoolCard key={item.id} item={item} cardType="Joiner"/>
+              <CarpoolCard key={item.id} item={item} cardType="Joined"/>
             </Box>
           ))}
         </Box>

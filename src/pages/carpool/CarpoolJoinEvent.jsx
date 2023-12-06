@@ -3,7 +3,7 @@ import {useLocation} from 'react-router-dom';
 import {useAuth} from "../../auth/AuthContext";
 
 
-export const Carpooljoinevent = ({itemid, userid, route}) => {
+export const Carpooljoinevent = ({itemid, initiatorID, route}) => {
   
   const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/';
   const url_get_usr_info = url+"/get-user-info/";

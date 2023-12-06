@@ -16,7 +16,7 @@ export const CarpoolEnded = () => {
   const mockResult = [
     {
       id: 1,
-      launcher: '測試資料一',
+      initiator: '測試資料一',
       route: ["台北", "桃園", "新竹"],
       num: 3,
       time: '2021/08/01 12:00',
@@ -27,7 +27,7 @@ export const CarpoolEnded = () => {
     },
     {
       id: 2,
-      launcher: '測試資料二',
+      initiator: '測試資料二',
       route: ["台北", "桃園", "新竹"],
       num: 2,
       time: '2022/09/01 12:00',
@@ -38,7 +38,7 @@ export const CarpoolEnded = () => {
     },
     {
       id: 3,
-      launcher: '測試資料三',
+      initiator: '測試資料三',
       route: ["淡水", "北車", "古亭", "公館", "新店"],
       num: 3,
       time: '2021/08/01 12:00',
@@ -67,7 +67,7 @@ export const CarpoolEnded = () => {
         if (data.result !== "None" && Object.keys(data).length > 0) {
           const formattedData = data.map(item => ({
             id: item.id,
-            launcher: item.initiator.toString(),
+            initiator: item.initiator.toString(),
             route: item.location.split(',').filter(part => part.trim() !== ''),
             num: item.number_of_people,
             time: item.start_time,

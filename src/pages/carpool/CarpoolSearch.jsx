@@ -54,7 +54,7 @@ export const CarpoolSearch = () => {
         if (data.result !== "None" && Object.keys(data).length > 0) {
           const formattedData = data.map((item) => ({
             id: item.id,
-            launcher: item.initiator,
+            initiator: item.initiator,
             route: routelist(item.location),
             location: item.location,
             num: item.number_of_people,
@@ -87,7 +87,8 @@ export const CarpoolSearch = () => {
   };
 
   const renderSearchResult = () => {
-    return userdata.map((item) => (
+    const ongoingEvent =userdata.filter(item => item.is_ended===false)
+    return ongoingEvent.map((item) => (
       <Box key={item.id} mt={1}>
         <Stack>
           <CarpoolCard

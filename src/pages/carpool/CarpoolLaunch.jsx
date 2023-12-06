@@ -12,7 +12,7 @@ import {
   Select,
   MenuItem,
   Grid,
-  Box, Paper, Divider, InputAdornment, InputLabel,
+  Box, Paper, Divider, InputAdornment, InputLabel, Alert,
 } from '@mui/material';
 import {DateTimePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
@@ -39,16 +39,8 @@ export const CarpoolLaunch = () => {
     setSelectedDate(date);
   };
 
-  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/';
+  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app';
   const urlInitiateCarpool = url + '/initiate-carpool-event';
-
-  const printOtherLocations = () => {
-    return otherLocations.map((item) => (
-      <div key={item}>
-        <p>地點：{item}</p>
-      </div>
-    ));
-  };
 
   const handleLaunchClick = () => {
     const target = {
@@ -73,7 +65,22 @@ export const CarpoolLaunch = () => {
       .then((response) => response.json())
       .then((responseText) => {
         setLaunchResult(responseText);
-        console.log(responseText);
+        
+        if (responseText.event_id) {
+          console.log(`發起成功，id=${responseText.event_id}`);
+          
+        } else  {
+          console.log(responseText);
+          switch (responseText.detail) {
+            case "無駕照":
+              alert("您還沒認證駕照,請改用非自駕或認證駕照");
+              break;
+            case "日期輸入錯誤":
+              alert("日期輸入錯誤, 請重新選取");
+              break;
+          }
+          
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -89,17 +96,17 @@ export const CarpoolLaunch = () => {
       setOtherLocations([...otherLocations, otherLocate]);
       setOtherLocate("");
     }
-  };  
-  const HandleResultOfReturn= () => {
+  };
   
-    return(
-      <dev>
-        {launchResult.detail === '無駕照' && <p>您還沒認證駕照,請改用非自駕或認證駕照</p>}
-        { launchResult.event_id && <p>發起成功 行程id為 : { launchResult.event_id } </p>}
-        { launchResult.detail === '日期輸入錯誤' && <p> 日期輸入錯誤, 請重新選取</p>}
-      </dev>
-    )
-  }
+  const onClearClick = () => {
+    setSelectedDate(dayjs());
+    setStart('');
+    setEnd('');
+    setNumberOfPeople('');
+    setIsSelfDrive(true);
+    setLaunchResult('');
+    setOtherLocations([]);
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -154,6 +161,8 @@ export const CarpoolLaunch = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <TextField
+                required={true}
+                aria-required={true}
                 label="輸入起始地點"
                 variant="outlined"
                 fullWidth
@@ -164,6 +173,8 @@ export const CarpoolLaunch = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
+                required={true}
+                aria-required={true}
                 label="輸入結束地點"
                 variant="outlined"
                 fullWidth
@@ -175,6 +186,8 @@ export const CarpoolLaunch = () => {
             <Grid item xs={12} md={6}>
               <TextField
                 select
+                required={true}
+                aria-required={true}
                 label="請輸入共乘人數"
                 variant="outlined"
                 fullWidth
@@ -238,14 +251,43 @@ export const CarpoolLaunch = () => {
             </Grid>
           </Grid>
           <Typography>已新增中間上下車地點：</Typography>
-          {printOtherLocations()}
+          { otherLocations.length === 0 &&  <div>無中途點</div>}
+          { otherLocations.length !== 0 && (
+            otherLocations.map((item) => (
+              <div key={item}>
+                <p>地點：{item}</p>
+              </div>
+            ))
+          )}
           <hr />
-          <Button variant="contained" color="primary" type="submit">
-            發起共乘
-          </Button>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Button disabled={launchResult.hasOwnProperty("event_id")} variant="contained" color="primary" type="submit">
+                發起共乘
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Button 
+                onClick={onClearClick} 
+                color="secondary" 
+                variant="contained" 
+              >
+                清除表單
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              {launchResult.detail === '無駕照' && <p>您還沒認證駕照,請改用非自駕或認證駕照</p>}
+              { launchResult.detail === '日期輸入錯誤' && <p> 日期輸入錯誤, 請重新選取</p>}
+              { launchResult.event_id &&
+                <Alert severity="success">
+                  發起成功 行程id為 : { launchResult.event_id }
+                </Alert>
+              }
+            </Grid>
+          </Grid>
         </form>
+        
       </Paper>
-      {HandleResultOfReturn()}
     </Container>
   )
 };

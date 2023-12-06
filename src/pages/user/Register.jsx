@@ -26,9 +26,19 @@ export const Register = () => {
         "username": username,
         "password": password,
         "display_name": display_name,
-        "phone": phone,
-        "mail": mail,
-      }
+      };
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("password", password);
+      formData.append("display_name", display_name);
+      console.log (formData);
+      if (phone.trim() !== "")
+        formData.append("phone", phone);
+      if (mail.trim() !== "")
+        formData.append("mail", mail);
+      console.log (formData);
+
+
       const response = await fetch(url_register, {
         method: 'POST',
         withCredentials: true,
@@ -110,8 +120,6 @@ export const Register = () => {
         <Box mt={2}>
           <TextField
             fullWidth
-            required={true}
-            aria-required={true}
             label="phone"
             type="phone"
             value={phone}
@@ -123,8 +131,6 @@ export const Register = () => {
         <Box mt={2}>
           <TextField
             fullWidth
-            required={true}
-            aria-required={true}
             label="mail"
             type="mail"
             value={mail}

@@ -58,7 +58,7 @@ export const User = () => {
             credentials: 'include',
             headers: new Headers({
               'Authorization': `Bearer ${userToken.access_token}`,
-              'Content-Type': 'application/x-www-form-urlencoded'
+              'Content-Type': 'application/json'
             })
           });
           console.log('fetch userInfo.');
