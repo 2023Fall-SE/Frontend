@@ -11,7 +11,7 @@ import {CarpoolLaunch} from './pages/carpool/CarpoolLaunch';
 import {CarpoolJoined} from './pages/carpool/CarpoolJoined';
 import {CarpoolEnded} from './pages/carpool/CarpoolEnded';
 import {Carpooljoinevent} from './pages/carpool/CarpoolJoinEvent';
-import {Chatroom} from './chatroom/App';
+
 // User
 import {User} from './pages/user/User'
 import {Register} from "./pages/user/Register"
