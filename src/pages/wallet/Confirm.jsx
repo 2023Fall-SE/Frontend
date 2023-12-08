@@ -3,7 +3,7 @@ import {Box, Button, Container, Divider, Grid, Paper, Typography} from "@mui/mat
 import {useAuth} from "../../auth/AuthContext";
 import {useSearchParams} from "react-router-dom";
 
-export const Confirm = (event_id) => {
+export const Confirm = () => {
   const url = "http://127.0.0.1:8080";
   const [searchParams, setSearchParams] = useSearchParams();
   const {isLoading, userToken} = useAuth();
@@ -24,18 +24,16 @@ export const Confirm = (event_id) => {
           }),
         });
         const data = await response.json();
-
+        console.log(data)
         if (Object.keys(data).length > 0) {
-          setCarpoolMoney(data.carpool_money);
-          return data;
-        } else {
-          setCarpoolMoney("null")
-          return 0;
+          if (data.content)
+            alert(data.content)
+          if (data.detail)
+            alert(data.detail)
         }
       } catch (error) {
-        console.error('Error fetching event information:', error);
+        console.error('Error fetch linepay-confirm:', error);
         // Handle error here, set joinedEvents to empty or show a message
-        setCarpoolMoney("尚未登入")
         return -1;
       }
     }

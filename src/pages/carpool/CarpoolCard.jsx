@@ -36,9 +36,6 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
   const urlPayment = url+`/payment/${userToken.user_id}?eventid=${item.id}`;
   
   useEffect(() => {
-    console.log(dayjs(item.time))
-    console.log(dayjs())
-    console.log(dayjs(item.time).isBefore(dayjs()))
     if( item.status === "end" ){
       fetchPayable();
     }
@@ -134,6 +131,9 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
             case "使用者無此權限":
               alert("您不是此共乘發起者，無法取消共乘");
               break;
+            case "":
+              alert(`responseText.detail:${responseText.detail}`);
+              navigate('/ended');
           }
         }
       }).catch((error) => {
@@ -192,9 +192,8 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
       }),
     }).then((response) => response.json())
       .then((responseText) => {
-        if (responseText.result) {
-          alert(`payable成功，${responseText.result}`);
-          navigate('/ended');
+        if (responseText.payment_url) {
+          window.location.replace(responseText.payment_url);
         } else {
           switch (responseText.detail) {
             case "使用者無此權限":
