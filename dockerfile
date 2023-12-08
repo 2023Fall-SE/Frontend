@@ -4,11 +4,13 @@ FROM node:latest
 # 設定工作目錄
 WORKDIR /app
 
-COPY . .
+COPY package*.json ./
 
-RUN yarn install && yarn cache clean
+RUN npm install
+
+COPY . .
 
 EXPOSE 3000
 
 # 定義啟動應用程式的指令
-CMD [ "yarn", "start" ]
+CMD [ "npm", "start" ]
