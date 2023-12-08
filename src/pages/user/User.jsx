@@ -50,7 +50,7 @@ export const User = () => {
         try {
           // Perform API call to get user info
           const userID = userToken.user_id;
-          const url = "https://carpool-service-test-cvklf2agbq-de.a.run.app/";
+          const url = "http://127.0.0.1:8080";
           const getUserInfo = url+`/get-user-info/${userID}`;
           const response = await fetch(getUserInfo, {
             method: 'get',
@@ -80,7 +80,7 @@ export const User = () => {
       if (!isLoading && userToken) {
         try {
           const userID = userToken.user_id;
-          const url = "https://carpool-service-test-cvklf2agbq-de.a.run.app/";
+          const url = "http://127.0.0.1:8080";
           const getUserImg = url+`/get-user-license/${userID}`;
           const res = await fetch(getUserImg, {
             method: 'get',

@@ -8,7 +8,7 @@ export const CarpoolEnded = () => {
   const {isLoading, userToken} = useAuth();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [endedEvents, setEndedEvents] = useState([]);
-  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/';
+  const url = 'http://127.0.0.1:8080';
   // const url = 'http://127.0.0.1:8000';
 
   const [carpoolMoney, setCarpoolMoney] = useState(null);
@@ -73,7 +73,8 @@ export const CarpoolEnded = () => {
             time: item.start_time,
             is_ended: item.end_time != null,
             carpool_attribute: item.is_self_drive ? "發起人自駕" : "非自駕",
-            "共乘費用": item.id * 30,
+            status: item.status,
+            available_seats: item.available_seats,
           }));
           setEndedEvents(formattedData);
         } else if (data.result === "None") {
@@ -93,7 +94,7 @@ export const CarpoolEnded = () => {
     if (!isLoading && userToken) {
       try {
         const userID = userToken.user_id;
-        const searchBalance = url+`/payment/${userID}`;
+        const searchBalance = url+`/wallet/${userID}`;
         const response = await fetch(searchBalance, {
           method: 'get',
           withCredentials: true,
@@ -106,7 +107,7 @@ export const CarpoolEnded = () => {
         const data = await response.json();
 
         if (Object.keys(data).length > 0) {
-          setCarpoolMoney(data.account);
+          setCarpoolMoney(data.carpool_money);
           return data.user_id;
         } else {
           setCarpoolMoney("null")

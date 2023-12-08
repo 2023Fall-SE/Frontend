@@ -22,7 +22,7 @@ export const AuthProvider = ({children}) => {
   const login = async (username, password) => {
     try {
       // Make a request to login API endpoint
-      const response = await fetch('https://carpool-service-test-cvklf2agbq-de.a.run.app/login', {
+      const response = await fetch('http://127.0.0.1:8080/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

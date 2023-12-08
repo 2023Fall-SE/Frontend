@@ -35,8 +35,8 @@ export const CarpoolSearch = () => {
   }
 
   const FindCarpool = (str1, str2) => {
-    const url = "https://carpool-service-test-cvklf2agbq-de.a.run.app/";
-    const url_find = url + "find-carpool";
+    const url = "http://127.0.0.1:8080";
+    const url_find = url + "/find-carpool";
     const urlfindCarpool =
       url_find + '?startLocation=' + str1 + '&endLocation=' + str2;
 
@@ -66,7 +66,7 @@ export const CarpoolSearch = () => {
               : "非自駕",
             accounts_payable: item.accounts_payable,
             available_seats: item.available_seats,
-            "共乘費用": item.id * 30,
+            status: item.status,
           })).filter((item) =>
             dayjs(item.time).isAfter(currentDate)
           );

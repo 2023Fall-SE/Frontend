@@ -19,6 +19,7 @@ import {Login} from "./pages/user/Login"
 import {UploadLicense} from "./pages/user/UploadLicense"
 //
 import {TopUp} from './pages/wallet/TopUp'
+import {Confirm} from './pages/wallet/Confirm'
 // Auth
 import {AuthProvider} from "./auth/AuthContext";
 
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
       {path: '/Login', element: <Login />},
       {path: '/Register', element: <Register />},
       {path: '/upload', element: <UploadLicense />},
+      {path: '/Confirm', element: <Confirm />},
       
       {
         path: '/loginstate', element: <RootLayout/>, children: [

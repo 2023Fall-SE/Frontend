@@ -71,6 +71,10 @@ export const RootLayout = () => {
               {page === 'nav-top-up' ? (<Link to="top-up" className="nav-link active">用戶儲值：目前在此</Link>)
                 : (<Link to="top-up" className="nav-link text-white">用戶儲值</Link>)}
             </li>
+            <li id='nav-confirm' className="nav-item" onClick={onNavClick}>
+              {page === 'nav-confirm' ? (<Link to="confirm" className="nav-link active">Confirm：目前在此</Link>)
+                : (<Link to="confirm" className="nav-link text-white">Confirm</Link>)}
+            </li>
           </ul>
         </div>
       </Col>

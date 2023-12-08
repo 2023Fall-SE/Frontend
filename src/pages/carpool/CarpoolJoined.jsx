@@ -7,7 +7,7 @@ export const CarpoolJoined = () => {
   const {isLoading, userToken} = useAuth();
   const [joinedEvents, setJoinedEvents] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/';
+  const url = 'http://127.0.0.1:8080';
   // const url = 'http://127.0.0.1:8000';
 
   const mockResult = [
@@ -69,7 +69,7 @@ export const CarpoolJoined = () => {
             is_ended: item.end_time != null,
             available_seats: item.available_seats,
             carpool_attribute: item.is_self_drive ? "發起人自駕" : "非自駕",
-            status: item.joiner,
+            status: item.status,
           }));
           setJoinedEvents(formattedData);
         } else {
@@ -103,11 +103,11 @@ export const CarpoolJoined = () => {
         </Typography>
         <hr />
         <Box style={{marginTop: 10}}>
-          {joinedEvents.length === 0 && (
+          {joinedEvents.filter(item => !item.is_ended).length === 0 && (
             <Typography>沒有搜尋結果</Typography>
           )}
           {joinedEvents.length > 0 && joinedEvents.map((item) => (
-            item.is_ended == false &&
+            item.is_ended === false &&
             <Box key={item.id} mt={1}>
               <CarpoolCard key={item.id} item={item} cardType="Joined"/>
             </Box>

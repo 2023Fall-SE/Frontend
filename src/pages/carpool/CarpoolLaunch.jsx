@@ -16,7 +16,13 @@ import {
 } from '@mui/material';
 import {DateTimePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+import dayjs, {Dayjs} from "dayjs";
+import 'dayjs/locale/zh-tw';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Asia/Taipei');
 
 export const CarpoolLaunch = () => {
   const { isLoaded, userToken} = useAuth();
@@ -33,25 +39,30 @@ export const CarpoolLaunch = () => {
   const [end, setEnd] = useState('');
   const [otherLocate, setOtherLocate] = useState('');
   const [otherLocations, setOtherLocations] = useState([]);
+  const [acc_payable, setAcc_Payable] = useState('');
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
   const handleDateChange = (date) => {
+    date.tz("Asia/Taipei");
     setSelectedDate(date);
   };
 
-  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app';
+  const url = 'http://127.0.0.1:8080';
   const urlInitiateCarpool = url + '/initiate-carpool-event';
 
   const handleLaunchClick = () => {
+    console.log(selectedDate.tz("Asia/Taipei").toLocaleString());
     const target = {
       user_id: userToken.user_id,
-      start_time: selectedDate,
+      start_time: selectedDate.format(),
       self_drive_or_not: isSelfDrive,
       number_of_people: numberOfPeople,
       start_location: start,
       end_location: end,
       other_location: otherLocations,
     };
+    if (acc_payable === '') 
+      target.acc_payable = acc_payable;
 
     fetch(urlInitiateCarpool, {
       method: 'POST',
@@ -135,28 +146,30 @@ export const CarpoolLaunch = () => {
           autoComplete="on"
         >
           <hr />
-          <Box mt={3}>
-            <Typography variant="h5">Select Date and Time</Typography>
-          </Box>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateTimePicker
-              label="日期和時間"
-              value={selectedDate}
-              onChange={handleDateChange}
-              renderInput={(props) => (
-                <TextField
-                  {...props}
-                  fullWidth
-                  placeholder="日期和時間"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">📅</InputAdornment>
-                    ),
-                  }}
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h5">Select Date and Time</Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="zh-tw">
+                <DateTimePicker
+                  label="選擇日期和時間"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e)}
                 />
-              )}
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="輸入共乘金額"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={acc_payable}
+              onChange={(e) => setAcc_Payable(e.target.value)}
             />
-          </LocalizationProvider>
+          </Grid>
           <hr />
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
