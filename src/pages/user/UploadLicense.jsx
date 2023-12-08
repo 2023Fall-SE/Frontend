@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../../auth/AuthContext";
 
 export const UploadLicense = () => {
-  const url="http://127.0.0.1:8080";
+  const url="https://carpool-service-test-cvklf2agbq-de.a.run.app";
   const navigate = useNavigate();
   const [uploading, setUploading] = useState(false);
   const [licenseImage, setLicenseImage] = useState(null);

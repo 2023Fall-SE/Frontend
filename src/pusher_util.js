@@ -6,7 +6,7 @@ export const beamsClient = new PusherPushNotifications.Client({
 
 export const pusher = (userid, token) => {
   const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
-    url: "http://127.0.0.1:8080/pusher/beams-auth",
+    url: "https://carpool-service-test-cvklf2agbq-de.a.run.app/pusher/beams-auth",
     queryParams: {
       "userid": userid, // URL query params your auth endpoint needs
     },
@@ -22,7 +22,7 @@ export const pusher = (userid, token) => {
 }
 
 export const notify = async (userid) => {
-  const url = `http://127.0.0.1:8080/pusher/send-notification/${userid}`
+  const url = `https://carpool-service-test-cvklf2agbq-de.a.run.app/pusher/send-notification/${userid}`
   const response = await fetch(url, {
     method: 'get',
   });

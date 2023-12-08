@@ -4,7 +4,7 @@ import {useAuth} from '../../auth/AuthContext';
 import {Box, Button, Container, Link as MuiLink, Paper, TextField, Typography,} from '@mui/material';
 
 export const Register = () => {
-  const url="http://127.0.0.1:8080"
+  const url="https://carpool-service-test-cvklf2agbq-de.a.run.app"
   const url_register = url+"/user"
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
