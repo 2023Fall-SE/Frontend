@@ -8,11 +8,6 @@ COPY . .
 
 RUN yarn install && yarn cache clean
 
-# 安裝 SQLite3
-RUN apt-get update && \
-    apt-get install -y sqlite3
-
-
 # 開放 FastAPI 服務埠
 EXPOSE 8080
 
