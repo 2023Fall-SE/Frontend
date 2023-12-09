@@ -2,47 +2,20 @@ import React, {useEffect, useState} from "react";
 import {useAuth} from "../../auth/AuthContext";
 import {Box, Container, Divider, Paper, Typography, Button} from "@mui/material";
 import CarpoolCard from "./CarpoolCard";
+import { useNavigate } from "react-router-dom";
 
 export const CarpoolJoined = () => {
+
   const {isLoading, userToken} = useAuth();
   const [joinedEvents, setJoinedEvents] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/';
   // const url = 'http://127.0.0.1:8000';
+  const navigate = useNavigate();
 
-  const mockResult = [
-    {
-      id: 1,
-      initiator: 'John',
-      route: ["台北", "桃園", "新竹"],
-      num: 3,
-      time: '2021/08/01 12:00',
-      is_ended: true,
-      carpool_attribute: "Uber",
-      "共乘費用": 30,
-    },
-    {
-      id: 2,
-      initiator: 'Selina',
-      route: ["台北", "桃園", "新竹"],
-      num: 2,
-      time: '2022/09/01 12:00',
-      is_ended: true,
-      carpool_attribute: "Uber",
-      "共乘費用": 70,
-    },
-    {
-      id: 3,
-      initiator: '',
-      route: ["淡水", "北車", "古亭", "公館", "新店"],
-      num: 3,
-      time: '2021/08/01 12:00',
-      is_ended: true,
-      carpool_attribute: "發起人自駕",
-      "共乘費用": 60,
-    },
-  ];
-
+  
+  
+  
   const fetchJoinedEvents = async () => {
     if (!isLoading && userToken) {
       try {
@@ -81,8 +54,11 @@ export const CarpoolJoined = () => {
         // Handle error here, set joinedEvents to empty or show a message
         setJoinedEvents([]);
       }
+          
     }
   };
+
+  
 
   useEffect(() => {
     const intervalId = setInterval(() => {

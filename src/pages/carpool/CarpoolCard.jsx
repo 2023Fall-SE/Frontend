@@ -158,7 +158,7 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
           <Box p={2}>
             <Grid container spacing={2} alignItems="center">
               <Grid item>
-                <Button variant="contained" color="primary">
+                <Button onClick = { navigate('/chatroom') } variant="contained" color="primary">
                   共乘聊天室
                 </Button>
               </Grid>

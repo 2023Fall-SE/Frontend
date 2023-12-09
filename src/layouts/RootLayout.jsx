@@ -5,6 +5,8 @@ import LocalTaxiIcon from '@mui/icons-material/LocalTaxi';
 import Header from "./Header";
 import {Grid} from "@mui/material"; // Import the Header component
 
+
+
 export const RootLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -70,6 +72,10 @@ export const RootLayout = () => {
             <li id='nav-top-up' className="nav-item" onClick={onNavClick}>
               {page === 'nav-top-up' ? (<Link to="top-up" className="nav-link active">用戶儲值：目前在此</Link>)
                 : (<Link to="top-up" className="nav-link text-white">用戶儲值</Link>)}
+            </li>
+            <li id='nav-chatroom' className="nav-item" onClick={onNavClick}>
+              {page === 'nav-chatroom' ? (<Link to="chatroom" className="nav-link active">聊天室：目前在此</Link>)
+                : (<Link to="chatroom" className="nav-link text-white">聊天室</Link>)}
             </li>
           </ul>
         </div>

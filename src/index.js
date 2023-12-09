@@ -12,6 +12,7 @@ import {CarpoolJoined} from './pages/carpool/CarpoolJoined';
 import {CarpoolEnded} from './pages/carpool/CarpoolEnded';
 import {Carpooljoinevent} from './pages/carpool/CarpoolJoinEvent';
 
+
 // User
 import {User} from './pages/user/User'
 import {Register} from "./pages/user/Register"
@@ -21,6 +22,9 @@ import {UploadLicense} from "./pages/user/UploadLicense"
 import {TopUp} from './pages/wallet/TopUp'
 // Auth
 import {AuthProvider} from "./auth/AuthContext";
+
+import {Chatroom} from "./chatroom/Chatroom";
+
 
 
 
@@ -37,6 +41,7 @@ const router = createBrowserRouter([
       {path: '/Login', element: <Login />},
       {path: '/Register', element: <Register />},
       {path: '/upload', element: <UploadLicense />},
+      {path: '/chatroom' ,element: <Chatroom/>},
       
       {
         path: '/loginstate', element: <RootLayout/>, children: [
@@ -45,7 +50,8 @@ const router = createBrowserRouter([
           {path: '/loginstate/joined', element: <CarpoolJoined/>},
           {path: '/loginstate/ended', element: <CarpoolEnded/>},
           {path: '/loginstate/:id', element: < Carpooljoinevent/>},
-          {path: '/loginstate/Login', element: <Login />}
+          {path: '/loginstate/Login', element: <Login />},
+          {path: '/loginstate/chatroom' ,element: <Chatroom/>},
 
         ]
       },
