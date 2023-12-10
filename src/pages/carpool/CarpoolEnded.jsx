@@ -170,7 +170,8 @@ export const CarpoolEnded = () => {
 
         ))}
       </Paper>
-      <Box mt={3} sx={{marginLeft: 2}}>
+      
+      {/* <Box mt={3} sx={{marginLeft: 2}}>
         <Grid container>
           <Grid item>
             <Button variant="contained" color="secondary" onClick={() => fetchEndedEvents()}>
@@ -199,7 +200,7 @@ export const CarpoolEnded = () => {
             </Button>
           </Grid>
         </Grid>
-      </Box>
+      </Box> */}
     </Container>
   );
 };
