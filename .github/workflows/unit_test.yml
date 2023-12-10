@@ -32,6 +32,15 @@ jobs:
         run:
           sleep 10
 
+      - name: show docker log
+        run: |
+          container_id=$(docker ps -q)
+          docker logs $container_id
+
+      - name: sleep
+        run:
+          sleep 10
+
       - name: test docker stop
         run:
           docker stop $(docker ps -a -q)
