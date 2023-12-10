@@ -10,7 +10,7 @@ env:
   REGION: asia-east1
 
 jobs:
-  testing:
+  unit-testing:
     runs-on: ubuntu-latest
 
     steps:

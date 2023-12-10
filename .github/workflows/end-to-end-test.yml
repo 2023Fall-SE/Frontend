@@ -10,7 +10,7 @@ env:
   REGION: asia-east1
 
 jobs:
-  testing:
+  e2e-testing:
     runs-on: ubuntu-latest
 
     steps:
@@ -43,4 +43,21 @@ jobs:
         run: |
           gcloud auth configure-docker asia-east1-docker.pkg.dev
           docker pull ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/carpool-service-backend-unitest/${{ env.SERVICE }}:01
-          docker images
+          docker run -d -p 3000:3000 ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/carpool-service-backend-unitest/${{ env.SERVICE }}:01
+
+      - name: Install Chrome
+        run: |
+          apt-get update
+          apt-get install -y google-chrome-stable
+
+      - name: Download ChromeDriver
+        run: |
+          LATEST_CHROMEDRIVER=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
+          curl -o chromedriver.zip https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
+          unzip chromedriver.zip
+          chmod +x chromedriver
+
+      - name: run test
+        run: |
+          python e2e_test.py
+
