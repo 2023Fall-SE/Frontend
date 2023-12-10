@@ -107,7 +107,7 @@ export const CarpoolSearch = () => {
       <Paper elevation={3} className="search-container" style={{ padding: 20 }}>
         <Typography variant="h4" style={{ marginBottom: 20 }}>
           搜尋共乘
-          user_id: {userToken ? userToken.user_id : "未登入"}
+          User : {userToken ? userToken.user_display_name : "未登入"}
         </Typography>
         <Divider />
         <Grid container spacing={2} className="search-form">

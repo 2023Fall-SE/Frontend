@@ -123,7 +123,7 @@ export const CarpoolLaunch = () => {
       <Paper elevation={3} className="search-container" style={{ padding: 20 }}>
         <Typography variant="h4" style={{ marginBottom: 20 }}>
           發起共乘
-          user_id: {userToken ? userToken.user_id : "未登入"}
+          User: {userToken ? userToken.user_display_name : "未登入"}
         </Typography>
         <Typography margin-bottom="10px">現在時間: {formattedDate}</Typography>
         <form

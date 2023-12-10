@@ -13,17 +13,21 @@ const style = {
 
 const SendMessage = ({scroll}) => {
   const [input, setInput] = useState('');
-
+  const { isLoaded, userToken} = useAuth(); /* Get Token page data*/
   const sendMessage = async (e) => {
     e.preventDefault()
     if (input === '') {
         alert('Please enter a valid message')
         return
     }
-    const {uid, displayName} = auth.currentUser
+    
+
+
+    const {uid, displayName } = auth.currentUser
+    
     await addDoc(collection(db, 'messages'), {
         text: input,
-        name: displayName,
+        name: userToken.user_display_name,
         uid,
         timestamp: serverTimestamp()
     })
@@ -41,7 +45,7 @@ const SendMessage = ({scroll}) => {
         placeholder='Message'
       />
       <button className={style.button} type='submit'>
-        Send
+        發送訊息
       </button>
     </form>
   );
