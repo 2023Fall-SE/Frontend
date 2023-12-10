@@ -24,6 +24,8 @@ export const AuthProvider = ({children}) => {
       // Make a request to login API endpoint
       const response = await fetch('https://carpool-service-test-cvklf2agbq-de.a.run.app/login', {
         method: 'POST',
+        withCredentials: true,
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
