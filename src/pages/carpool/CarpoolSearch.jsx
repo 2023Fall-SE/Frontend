@@ -55,7 +55,7 @@ export const CarpoolSearch = () => {
           const formattedData = data.map((item) => ({
             id: item.id,
             initiator: item.initiator,
-            route: routelist(item.location),
+            route: item.location.split(',').filter(part => part.trim() !== ''),
             location: item.location,
             num: item.number_of_people,
             time: item.start_time,
