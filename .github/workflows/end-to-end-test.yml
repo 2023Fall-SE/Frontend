@@ -56,6 +56,10 @@ jobs:
           unzip chromedriver.zip
           sudo chmod +x chromedriver
 
+      - name: install selenium
+        run: |
+          pip3 install selenium
+
       - name: run test
         run: |
           python e2e_test.py
