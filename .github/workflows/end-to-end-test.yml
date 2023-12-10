@@ -32,15 +32,15 @@ jobs:
         run:
           sleep 10
 
-      - name: show docker log
+      - uses: google-github-actions/auth@v1
+        id: auth
+        with:
+          project_id: ${{ env.PROJECT_ID }}
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          create_credentials_file: true
+
+      - name: Build Docker Image
         run: |
-          container_id=$(docker ps -q)
-          docker logs $container_id
-
-      - name: sleep
-        run:
-          sleep 10
-
-      - name: test docker stop
-        run:
-          docker stop $(docker ps -a -q)
+          gcloud auth configure-docker asia-east1-docker.pkg.dev
+          docker pull ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/carpool-service-backend-unitest/${{ env.SERVICE }}:01
+          docker images
