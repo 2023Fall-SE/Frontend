@@ -89,6 +89,12 @@ export const CarpoolLaunch = () => {
             case "日期輸入錯誤":
               alert("日期輸入錯誤, 請重新選取");
               break;
+            case "地點不可重複":
+              alert("地點不可重複");
+              break;
+            case "此用戶有未繳清款項":
+              alert("用戶有未繳清款項");
+              break;
           }
           
         }
