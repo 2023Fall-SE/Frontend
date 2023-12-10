@@ -32,7 +32,7 @@ const ChangePassword = ({onCancel, handleSuccess}) => {
     if (isFormValid()) {
       try {
         const userID = 1;
-        const url = "https://carpool-service-test-cvklf2agbq-de.a.run.app/";
+        const url = "http://127.0.0.1:8080";
         const updateUserInfo = url+"/update-user-info";
         const response = await fetch(updateUserInfo, {
           method: 'POST',

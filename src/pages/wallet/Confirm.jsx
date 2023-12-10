@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from "react";
 import {Box, Button, Container, Divider, Grid, Paper, Typography} from "@mui/material";
 import {useAuth} from "../../auth/AuthContext";
+import {useSearchParams} from "react-router-dom";
 
-export const TopUp = () => {
+export const Confirm = () => {
   const url = "http://127.0.0.1:8080";
+  const [searchParams, setSearchParams] = useSearchParams();
   const {isLoading, userToken} = useAuth();
   const [carpoolMoney, setCarpoolMoney] = useState(0);
 
-  const fetchBalance = async () => {
+  const fetchConfirm = async () => {
     if (!isLoading && userToken) {
       try {
         const userID = userToken.user_id;
-        const searchBalance = url+`/wallet/${userID}`;
+        const searchBalance = url+`/linepay-confirm?userid=${userToken.user_id}&eventid=${searchParams.get("event_id")}`;
         const response = await fetch(searchBalance, {
-          method: 'get',
+          method: 'POST',
           withCredentials: true,
           credentials: 'include',
           headers: new Headers({
@@ -22,18 +24,16 @@ export const TopUp = () => {
           }),
         });
         const data = await response.json();
-
+        console.log(data)
         if (Object.keys(data).length > 0) {
-          setCarpoolMoney(data.carpool_money);
-          return data;
-        } else {
-          setCarpoolMoney("null")
-          return 0;
+          if (data.content)
+            alert(data.content)
+          if (data.detail)
+            alert(data.detail)
         }
       } catch (error) {
-        console.error('Error fetching event information:', error);
+        console.error('Error fetch linepay-confirm:', error);
         // Handle error here, set joinedEvents to empty or show a message
-        setCarpoolMoney("尚未登入")
         return -1;
       }
     }
@@ -59,7 +59,6 @@ export const TopUp = () => {
 
   useEffect(() => {
     if (!isLoading && userToken) {
-      fetchBalance();
       token_check();
     }
     if (!isLoading && userToken == null) {
@@ -71,13 +70,15 @@ export const TopUp = () => {
     <Container style={{marginTop: 20}}>
       <Paper elevation={3} style={{padding: 20, height: "calc(95vh - 64px)"}}>
         <Typography variant="h4" style={{marginBottom: 20}}>
-          儲值Carpool-Money
+          Confirm Page
         </Typography>
         <hr />
         <Box mt={3} sx={{marginLeft: 2}}>
           <Grid container>
             <Grid item>
-              <Typography variant="h5">我的Carpool-Money: {carpoolMoney}</Typography>
+              <Button variant="contained" onClick={fetchConfirm}>
+                確認付款
+              </Button>
             </Grid>
           </Grid>
         </Box>
@@ -89,4 +90,4 @@ export const TopUp = () => {
   );
 };
 
-export default TopUp;
+export default Confirm;

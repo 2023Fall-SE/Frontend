@@ -8,7 +8,7 @@ export const CarpoolEnded = () => {
   const {isLoading, userToken} = useAuth();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [endedEvents, setEndedEvents] = useState([]);
-  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/';
+  const url = 'http://127.0.0.1:8080';
   // const url = 'http://127.0.0.1:8000';
 
   const [carpoolMoney, setCarpoolMoney] = useState(null);
@@ -16,7 +16,7 @@ export const CarpoolEnded = () => {
   const mockResult = [
     {
       id: 1,
-      launcher: '測試資料一',
+      initiator: '測試資料一',
       route: ["台北", "桃園", "新竹"],
       num: 3,
       time: '2021/08/01 12:00',
@@ -27,7 +27,7 @@ export const CarpoolEnded = () => {
     },
     {
       id: 2,
-      launcher: '測試資料二',
+      initiator: '測試資料二',
       route: ["台北", "桃園", "新竹"],
       num: 2,
       time: '2022/09/01 12:00',
@@ -38,7 +38,7 @@ export const CarpoolEnded = () => {
     },
     {
       id: 3,
-      launcher: '測試資料三',
+      initiator: '測試資料三',
       route: ["淡水", "北車", "古亭", "公館", "新店"],
       num: 3,
       time: '2021/08/01 12:00',
@@ -67,13 +67,14 @@ export const CarpoolEnded = () => {
         if (data.result !== "None" && Object.keys(data).length > 0) {
           const formattedData = data.map(item => ({
             id: item.id,
-            launcher: item.initiator.toString(),
+            initiator: item.initiator.toString(),
             route: item.location.split(',').filter(part => part.trim() !== ''),
             num: item.number_of_people,
             time: item.start_time,
             is_ended: item.end_time != null,
             carpool_attribute: item.is_self_drive ? "發起人自駕" : "非自駕",
-            "共乘費用": item.id * 30,
+            status: item.status,
+            available_seats: item.available_seats,
           }));
           setEndedEvents(formattedData);
         } else if (data.result === "None") {
@@ -93,7 +94,7 @@ export const CarpoolEnded = () => {
     if (!isLoading && userToken) {
       try {
         const userID = userToken.user_id;
-        const searchBalance = url+`/payment/${userID}`;
+        const searchBalance = url+`/wallet/${userID}`;
         const response = await fetch(searchBalance, {
           method: 'get',
           withCredentials: true,
@@ -106,7 +107,7 @@ export const CarpoolEnded = () => {
         const data = await response.json();
 
         if (Object.keys(data).length > 0) {
-          setCarpoolMoney(data.account);
+          setCarpoolMoney(data.carpool_money);
           return data.user_id;
         } else {
           setCarpoolMoney("null")

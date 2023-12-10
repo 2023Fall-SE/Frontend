@@ -4,7 +4,7 @@ import {useAuth} from '../../auth/AuthContext';
 import {Box, Button, Container, Link as MuiLink, Paper, TextField, Typography,} from '@mui/material';
 
 export const Register = () => {
-  const url="https://carpool-service-test-cvklf2agbq-de.a.run.app/"
+  const url="http://127.0.0.1:8080"
   const url_register = url+"/user"
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -26,13 +26,16 @@ export const Register = () => {
         "username": username,
         "password": password,
         "display_name": display_name,
-        "phone": phone,
-        "mail": mail,
-      }
+      };
+      if (phone.trim() !== "")
+        target['phone'] = phone;
+      if (mail.trim() !== "")
+        target['mail'] = mail;
+      console.log (target);
+
+
       const response = await fetch(url_register, {
         method: 'POST',
-        withCredentials: true,
-        credentials: 'include',
         headers: new Headers({
           'accept': 'application/json',
           'Content-Type': 'application/json' // <-- Specifying the Content-Type
@@ -110,8 +113,6 @@ export const Register = () => {
         <Box mt={2}>
           <TextField
             fullWidth
-            required={true}
-            aria-required={true}
             label="phone"
             type="phone"
             value={phone}
@@ -123,8 +124,6 @@ export const Register = () => {
         <Box mt={2}>
           <TextField
             fullWidth
-            required={true}
-            aria-required={true}
             label="mail"
             type="mail"
             value={mail}

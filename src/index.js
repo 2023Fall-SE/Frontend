@@ -11,6 +11,7 @@ import {CarpoolLaunch} from './pages/carpool/CarpoolLaunch';
 import {CarpoolJoined} from './pages/carpool/CarpoolJoined';
 import {CarpoolEnded} from './pages/carpool/CarpoolEnded';
 import {Carpooljoinevent} from './pages/carpool/CarpoolJoinEvent';
+
 // User
 import {User} from './pages/user/User'
 import {Register} from "./pages/user/Register"
@@ -18,6 +19,7 @@ import {Login} from "./pages/user/Login"
 import {UploadLicense} from "./pages/user/UploadLicense"
 //
 import {TopUp} from './pages/wallet/TopUp'
+import {Confirm} from './pages/wallet/Confirm'
 // Auth
 import {AuthProvider} from "./auth/AuthContext";
 
@@ -36,7 +38,8 @@ const router = createBrowserRouter([
       {path: '/Login', element: <Login />},
       {path: '/Register', element: <Register />},
       {path: '/upload', element: <UploadLicense />},
-
+      {path: '/Confirm', element: <Confirm />},
+      
       {
         path: '/loginstate', element: <RootLayout/>, children: [
           {path: '/loginstate/search', element: <CarpoolSearch/>},
@@ -45,6 +48,7 @@ const router = createBrowserRouter([
           {path: '/loginstate/ended', element: <CarpoolEnded/>},
           {path: '/loginstate/:id', element: < Carpooljoinevent/>},
           {path: '/loginstate/Login', element: <Login />}
+
         ]
       },
     ]

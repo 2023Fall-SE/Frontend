@@ -12,11 +12,17 @@ import {
   Select,
   MenuItem,
   Grid,
-  Box, Paper, Divider, InputAdornment, InputLabel,
+  Box, Paper, Divider, InputAdornment, InputLabel, Alert,
 } from '@mui/material';
 import {DateTimePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from "dayjs";
+import dayjs, {Dayjs} from "dayjs";
+import 'dayjs/locale/zh-tw';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('Asia/Taipei');
 
 export const CarpoolLaunch = () => {
   const { isLoaded, userToken} = useAuth();
@@ -33,33 +39,30 @@ export const CarpoolLaunch = () => {
   const [end, setEnd] = useState('');
   const [otherLocate, setOtherLocate] = useState('');
   const [otherLocations, setOtherLocations] = useState([]);
+  const [acc_payable, setAcc_Payable] = useState('');
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
   const handleDateChange = (date) => {
+    date.tz("Asia/Taipei");
     setSelectedDate(date);
   };
 
-  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/';
+  const url = 'http://127.0.0.1:8080';
   const urlInitiateCarpool = url + '/initiate-carpool-event';
 
-  const printOtherLocations = () => {
-    return otherLocations.map((item) => (
-      <div key={item}>
-        <p>地點：{item}</p>
-      </div>
-    ));
-  };
-
   const handleLaunchClick = () => {
+    console.log(selectedDate.tz("Asia/Taipei").toLocaleString());
     const target = {
       user_id: userToken.user_id,
-      start_time: selectedDate,
+      start_time: selectedDate.format(),
       self_drive_or_not: isSelfDrive,
       number_of_people: numberOfPeople,
       start_location: start,
       end_location: end,
       other_location: otherLocations,
     };
+    if (acc_payable === '') 
+      target.acc_payable = acc_payable;
 
     fetch(urlInitiateCarpool, {
       method: 'POST',
@@ -73,7 +76,22 @@ export const CarpoolLaunch = () => {
       .then((response) => response.json())
       .then((responseText) => {
         setLaunchResult(responseText);
-        console.log(responseText);
+        
+        if (responseText.event_id) {
+          console.log(`發起成功，id=${responseText.event_id}`);
+          
+        } else  {
+          console.log(responseText);
+          switch (responseText.detail) {
+            case "無駕照":
+              alert("您還沒認證駕照,請改用非自駕或認證駕照");
+              break;
+            case "日期輸入錯誤":
+              alert("日期輸入錯誤, 請重新選取");
+              break;
+          }
+          
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -89,17 +107,17 @@ export const CarpoolLaunch = () => {
       setOtherLocations([...otherLocations, otherLocate]);
       setOtherLocate("");
     }
-  };  
-  const HandleResultOfReturn= () => {
+  };
   
-    return(
-      <dev>
-        {launchResult.detail === '無駕照' && <p>您還沒認證駕照,請改用非自駕或認證駕照</p>}
-        { launchResult.event_id && <p>發起成功 行程id為 : { launchResult.event_id } </p>}
-        { launchResult.detail === '日期輸入錯誤' && <p> 日期輸入錯誤, 請重新選取</p>}
-      </dev>
-    )
-  }
+  const onClearClick = () => {
+    setSelectedDate(dayjs());
+    setStart('');
+    setEnd('');
+    setNumberOfPeople('');
+    setIsSelfDrive(true);
+    setLaunchResult('');
+    setOtherLocations([]);
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -128,32 +146,36 @@ export const CarpoolLaunch = () => {
           autoComplete="on"
         >
           <hr />
-          <Box mt={3}>
-            <Typography variant="h5">Select Date and Time</Typography>
-          </Box>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateTimePicker
-              label="日期和時間"
-              value={selectedDate}
-              onChange={handleDateChange}
-              renderInput={(props) => (
-                <TextField
-                  {...props}
-                  fullWidth
-                  placeholder="日期和時間"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">📅</InputAdornment>
-                    ),
-                  }}
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h5">Select Date and Time</Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="zh-tw">
+                <DateTimePicker
+                  label="選擇日期和時間"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e)}
                 />
-              )}
+              </LocalizationProvider>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              label="輸入共乘金額"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={acc_payable}
+              onChange={(e) => setAcc_Payable(e.target.value)}
             />
-          </LocalizationProvider>
+          </Grid>
           <hr />
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <TextField
+                required={true}
+                aria-required={true}
                 label="輸入起始地點"
                 variant="outlined"
                 fullWidth
@@ -164,6 +186,8 @@ export const CarpoolLaunch = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
+                required={true}
+                aria-required={true}
                 label="輸入結束地點"
                 variant="outlined"
                 fullWidth
@@ -175,6 +199,8 @@ export const CarpoolLaunch = () => {
             <Grid item xs={12} md={6}>
               <TextField
                 select
+                required={true}
+                aria-required={true}
                 label="請輸入共乘人數"
                 variant="outlined"
                 fullWidth
@@ -238,14 +264,43 @@ export const CarpoolLaunch = () => {
             </Grid>
           </Grid>
           <Typography>已新增中間上下車地點：</Typography>
-          {printOtherLocations()}
+          { otherLocations.length === 0 &&  <div>無中途點</div>}
+          { otherLocations.length !== 0 && (
+            otherLocations.map((item) => (
+              <div key={item}>
+                <p>地點：{item}</p>
+              </div>
+            ))
+          )}
           <hr />
-          <Button variant="contained" color="primary" type="submit">
-            發起共乘
-          </Button>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Button disabled={launchResult.hasOwnProperty("event_id")} variant="contained" color="primary" type="submit">
+                發起共乘
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Button 
+                onClick={onClearClick} 
+                color="secondary" 
+                variant="contained" 
+              >
+                清除表單
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              {launchResult.detail === '無駕照' && <p>您還沒認證駕照,請改用非自駕或認證駕照</p>}
+              { launchResult.detail === '日期輸入錯誤' && <p> 日期輸入錯誤, 請重新選取</p>}
+              { launchResult.event_id &&
+                <Alert severity="success">
+                  發起成功 行程id為 : { launchResult.event_id }
+                </Alert>
+              }
+            </Grid>
+          </Grid>
         </form>
+        
       </Paper>
-      {HandleResultOfReturn()}
     </Container>
   )
 };
