@@ -72,6 +72,7 @@ export const Carpooljoinevent = ({itemid, initiatorID, route}) => {
     return (
       <div>
         {Eventdata.detail === "位子不夠" && <h2>位子不夠:無法加入行程</h2>}
+        {Eventdata.detail === "此用戶有未繳清款項" && <h2>用戶有未繳清款項:無法加入行程</h2>}
         {Eventdata.detail === "無此Event" && <h2>找不到此行程</h2>}
 
         {Eventdata.detail === "使用者已在此Event" && <h2> 您已在此Carpool行程</h2>}
