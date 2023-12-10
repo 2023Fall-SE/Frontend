@@ -37,7 +37,7 @@ export const CarpoolSearchUI = () => {
       <Paper elevation={3} className="search-container" style={{padding: 20}}>
         <Typography variant="h4" style={{marginBottom: 20}}>
           搜尋共乘
-          user_id: {userToken ? userToken.user_id : "未登入"}
+          使用者: {userToken ? userToken.user_display_name : "未登入"}
         </Typography>
         <Divider/>
         <Grid container spacing={2} className="search-form">

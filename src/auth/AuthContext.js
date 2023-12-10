@@ -61,6 +61,7 @@ export const AuthProvider = ({children}) => {
           access_token: data.access_token,
           token_type: data.token_type,
           user_id: data.user_id,
+          user_display_name: data.user_display_name
         };
         setUserToken(newUserToken);
         setCookie('userToken', JSON.stringify(newUserToken), {path: '/'});
