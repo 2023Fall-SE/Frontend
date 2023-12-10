@@ -28,10 +28,6 @@ jobs:
         run:
           docker run -d -p 3000:3000 unit_test:01
 
-      - name: sleep
-        run:
-          sleep 10
-
       - uses: google-github-actions/auth@v1
         id: auth
         with:
@@ -39,23 +35,26 @@ jobs:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
           create_credentials_file: true
 
-      - name: Build Docker Image
+      - name: Pull Backend Docker Image
         run: |
           gcloud auth configure-docker asia-east1-docker.pkg.dev
           docker pull ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/carpool-service-backend-unitest/${{ env.SERVICE }}:01
+        
+      - name: RUN Backend Docker Image
+        run: | 
           docker run -d -p 8080:8080 ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/carpool-service-backend-unitest/${{ env.SERVICE }}:01
 
       - name: Install Chrome
         run: |
-          apt-get update
-          apt-get install -y google-chrome-stable
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
 
       - name: Download ChromeDriver
         run: |
           LATEST_CHROMEDRIVER=$(curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE)
           curl -o chromedriver.zip https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip
           unzip chromedriver.zip
-          chmod +x chromedriver
+          sudo chmod +x chromedriver
 
       - name: run test
         run: |
