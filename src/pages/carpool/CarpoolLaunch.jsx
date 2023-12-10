@@ -168,6 +168,7 @@ export const CarpoolLaunch = () => {
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
+              required={true}
               label="輸入共乘金額"
               variant="outlined"
               fullWidth

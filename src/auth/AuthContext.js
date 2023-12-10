@@ -24,8 +24,6 @@ export const AuthProvider = ({children}) => {
       // Make a request to login API endpoint
       const response = await fetch('http://127.0.0.1:8080/login', {
         method: 'POST',
-        withCredentials: true,
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
