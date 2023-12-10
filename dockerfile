@@ -13,4 +13,4 @@ COPY . .
 EXPOSE 3000
 
 # 定義啟動應用程式的指令
-CMD npm start && npm test
+CMD npm test && npm start

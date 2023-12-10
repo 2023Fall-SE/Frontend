@@ -1,0 +1,46 @@
+name: unit-test
+
+on:
+  push:
+    branches: [main]
+
+env:
+  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  SERVICE: carpool-service-backend-unitest
+  REGION: asia-east1
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: build test docker
+        run:
+          docker build -t unit_test:01 .
+
+      - name: run test docker
+        run:
+          docker run -d -p 3000:3000 unit_test:01
+
+      - name: sleep
+        run:
+          sleep 10
+
+      - name: show docker log
+        run: |
+          container_id=$(docker ps -q)
+          docker logs $container_id
+
+      - name: sleep
+        run:
+          sleep 10
+
+      - name: test docker stop
+        run:
+          docker stop $(docker ps -a -q)
