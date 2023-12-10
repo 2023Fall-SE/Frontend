@@ -1,4 +1,4 @@
-name: unit-test
+name: e2e-test
 
 on:
   push:
@@ -43,7 +43,7 @@ jobs:
         run: |
           gcloud auth configure-docker asia-east1-docker.pkg.dev
           docker pull ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/carpool-service-backend-unitest/${{ env.SERVICE }}:01
-          docker run -d -p 3000:3000 ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/carpool-service-backend-unitest/${{ env.SERVICE }}:01
+          docker run -d -p 8080:8080 ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/carpool-service-backend-unitest/${{ env.SERVICE }}:01
 
       - name: Install Chrome
         run: |
