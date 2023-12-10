@@ -19,12 +19,12 @@ const UserEdit = ({userInfo, onCancel, handleSuccess}) => {
     const isAnyFieldNotEmpty = Object.values(editedUserInfo).some(value => value.trim() !== '');
 
     // Specific validation conditions for each field
-    const isDisplayNameValid = editedUserInfo.display_name.trim().length >= 3;
-    const isPhoneValid = editedUserInfo.phone.trim().length >= 10;
-    const isEmailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/.test(editedUserInfo.mail);
-
+    const isDisplayNameValid = !editedUserInfo.display_name.trim() || editedUserInfo.display_name.trim().length >= 3;
+    const isPhoneValid = !editedUserInfo.phone.trim() || editedUserInfo.phone.trim().length >= 10;
+    const isEmailValid = !editedUserInfo.mail.trim() || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/.test(editedUserInfo.mail);
+    
     // Check if at least one condition is met
-    return isAnyFieldNotEmpty && isDisplayNameValid && isPhoneValid && isEmailValid;
+    return isAnyFieldNotEmpty || isDisplayNameValid || isPhoneValid || isEmailValid;
   };
   const handleSaveClick = async () => {
     if (isFormValid()) {

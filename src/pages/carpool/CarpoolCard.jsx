@@ -212,8 +212,8 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
             case "此用戶已完成付款":
               alert("此用戶已完成付款");
               break;
-            case "此用戶尚有待確認付款":
-              alert("此用戶尚有待確認付款");
+            case "此用戶有未繳清款項":
+              alert("此用戶有未繳清款項");
               break;
           }
         }

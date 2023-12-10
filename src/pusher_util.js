@@ -4,44 +4,43 @@ export const beamsClient = new PusherPushNotifications.Client({
   instanceId: 'f6cd0c10-192e-4b49-9851-980cc7a0ab3d',
 });
 
-export const pusher = (userid, token) => {
+export const pusher = (username) => {
   const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
     url: "https://carpool-service-test-cvklf2agbq-de.a.run.app/pusher/beams-auth",
     queryParams: {
-      "userid": userid, // URL query params your auth endpoint needs
+      "username": username, // URL query params your auth endpoint needs
     },
-    headers: {
-      "Authorization": `Bearer ${token}`, // Headers your auth endpoint needs
-    },
+    // headers: {
+    //   "Authorization": `Bearer ${token}`, // Headers your auth endpoint needs
+    // },
   });
   beamsClient
   .start()
-  .then(() => beamsClient.setUserId(userid, beamsTokenProvider))
-  .catch(console.error);
-
-}
-
-export const notify = async (userid) => {
-  const url = `https://carpool-service-test-cvklf2agbq-de.a.run.app/pusher/send-notification/${userid}`
-  const response = await fetch(url, {
-    method: 'get',
-  });
-  const data = await response.json();
-  console.log(data)
-}
-
-export const pusher_checkmatchuser = (currentUserId) => {
-  beamsClient
-  .getUserId()
-  .then((userId) => {
-    // Check if the Beams user matches the user that is currently logged in
-    if (userId !== currentUserId) {
-      // Unregister for notifications
-      return beamsClient.stop();
-    }
-  })
+  .then(() => beamsClient.setUserId(username, beamsTokenProvider))
   .catch(console.error);
 }
+
+// export const notify = async (eventid) => {
+//   const url = `http://127.0.0.1:8080/pusher/send-notification/${eventid}`
+//   const response = await fetch(url, {
+//     method: 'get',
+//   });
+//   const data = await response.json();
+//   console.log(data)
+// }
+
+// export const pusher_checkmatchuser = (currentUserId) => {
+//   beamsClient
+//   .getUserId()
+//   .then((userId) => {
+//     // Check if the Beams user matches the user that is currently logged in
+//     if (userId !== currentUserId) {
+//       // Unregister for notifications
+//       return beamsClient.stop();
+//     }
+//   })
+//   .catch(console.error);
+// }
 
 //Activate and send notifications to users in ./pages/...
 //pusher() should be called when user logs in

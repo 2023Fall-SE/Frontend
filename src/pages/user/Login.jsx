@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {useAuth} from '../../auth/AuthContext';
 import {Box, Button, Container, Link as MuiLink, Paper, TextField, Typography,} from '@mui/material';
+import { pusher } from "../../pusher_util";
 
 export const Login = () => {
   const [username, setUsername] = useState('');
@@ -18,6 +19,8 @@ export const Login = () => {
   const handleLogin = async () => {
     try {
       await login(username, password);
+      //Activate pusher 
+      pusher(username);
       navigate('/search');
     } catch (error) {
       alert(error);
