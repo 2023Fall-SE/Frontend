@@ -20,8 +20,8 @@ const UserEdit = ({userInfo, onCancel, handleSuccess}) => {
 
     // Specific validation conditions for each field
     const isDisplayNameValid = !editedUserInfo.display_name.trim() || editedUserInfo.display_name.trim().length >= 3;
-    const isPhoneValid = !editedUserInfo.phone.trim() || editedUserInfo.phone.trim().length >= 10;
-    const isEmailValid = !editedUserInfo.mail.trim() || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/.test(editedUserInfo.mail);
+    const isPhoneValid = !editedUserInfo.phone || editedUserInfo.phone.trim().length >= 10;
+    const isEmailValid = !editedUserInfo.mail || /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/.test(editedUserInfo.mail);
     
     // Check if at least one condition is met
     return isAnyFieldNotEmpty || isDisplayNameValid || isPhoneValid || isEmailValid;
@@ -59,7 +59,8 @@ const UserEdit = ({userInfo, onCancel, handleSuccess}) => {
           const errorData = await response.json();
           console.error('API error:', errorData);
           setSaveError(true);
-          setErrorMessage('API error:' + errorData.message);
+          const errMessage = Array.isArray(errorData.detail) ? errorData.detail[0].msg : errorData.detail;
+          setErrorMessage('API error:' + errMessage);
         }
       } catch (error) {
         console.error('Error updating user information:', error);
