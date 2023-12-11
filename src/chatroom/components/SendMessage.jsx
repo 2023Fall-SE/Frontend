@@ -12,6 +12,7 @@ const style = {
 };
 
 const SendMessage = ({scroll}) => {
+
   const [input, setInput] = useState('');
   const { isLoaded, userToken} = useAuth(); /* Get Token page data*/
   const sendMessage = async (e) => {
@@ -25,12 +26,22 @@ const SendMessage = ({scroll}) => {
 
     const {uid, displayName } = auth.currentUser
     
+    
     await addDoc(collection(db, 'messages'), {
         text: input,
         name: userToken.user_display_name,
         uid,
         timestamp: serverTimestamp()
     })
+
+    /*
+    await addDoc(collection(db, 'chatroom1'), {
+      text: input,
+      name: userToken.user_display_name,
+      uid,
+      timestamp: serverTimestamp()
+    })*/
+
     setInput('')
     scroll.current.scrollIntoView({behavior: 'smooth'})
   }
