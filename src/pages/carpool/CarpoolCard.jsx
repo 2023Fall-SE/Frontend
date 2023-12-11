@@ -49,9 +49,9 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
 
 
   // fetch chatroom
-  function fetchChatroom(){
+  function fetchChatroom(id){
     console.log("To chatroom");
-    navigate('/Chatroom');
+    navigate('/Chatroom',{ state: { id: id  }});
   }
   
   function fetchPayable() {
@@ -274,7 +274,7 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
                 <Button 
                 variant="contained" 
                 color="primary"
-                onClick={fetchChatroom} 
+                onClick={() => fetchChatroom(item.id)} 
                 autoFocus
                   >
                   共乘聊天室

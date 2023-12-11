@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {auth, db} from '../firebase'
 import {addDoc, collection, serverTimestamp} from 'firebase/firestore'
 import {Form , Badge, Button} from 'react-bootstrap';
 import {useAuth} from "../../auth/AuthContext";
+import { useLocation } from 'react-router-dom';
 
 
 const style = {
@@ -11,10 +12,20 @@ const style = {
   button: `w-[20%] bg-green-500`,
 };
 
+
+
 const SendMessage = ({scroll}) => {
+
+  const {state} = useLocation();
+  const { id} = state; // Read values passed on state
+
+  
+
+
 
   const [input, setInput] = useState('');
   const { isLoaded, userToken} = useAuth(); /* Get Token page data*/
+
   const sendMessage = async (e) => {
     e.preventDefault()
     if (input === '') {
@@ -24,10 +35,12 @@ const SendMessage = ({scroll}) => {
     
 
 
+
     const {uid, displayName } = auth.currentUser
     
     
-    await addDoc(collection(db, 'messages'), {
+    
+    await addDoc(collection(db, 'chatroom' + String(id % 10)), {
         text: input,
         name: userToken.user_display_name,
         uid,
