@@ -7,8 +7,9 @@ export const CarpoolJoined = () => {
   const {isLoading, userToken} = useAuth();
   const [joinedEvents, setJoinedEvents] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
-  const url = 'http://127.0.0.1:8080';
+  //const url = 'http://127.0.0.1:8080';
   // const url = 'http://127.0.0.1:8000';
+  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
 
   const mockResult = [
     {

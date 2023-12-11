@@ -27,13 +27,17 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
   const [endConfirm, setEndConfirm] = useState(false);
   const [leaveConfirm, setLeaveConfirm] = useState(false);
   const [payConfirm, setPayConfirm] = useState(false);
-  
-  const url = 'http://127.0.0.1:8080';
+  const [Chatroomconfirm,setChatRoom] = useState(false);
+
+  //const url = 'http://127.0.0.1:8080';
+  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
   const urlDismiss = url+'/dismiss-the-carpool';
   const urlEnd = url+'/end-the-carpool';
   const urlLeave = url+'/leave-the-carpool';
   const urlPayable = url+`/payable`;
   const urlPayment = url+`/payment/${userToken.user_id}?eventid=${item.id}`;
+  
+
   
   useEffect(() => {
     if( item.status === "end" ){
@@ -41,6 +45,14 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
     }
   }, []);
   
+
+
+  // fetch chatroom
+  function fetchChatroom(){
+    
+    navigate('/Chatroom');
+  }
+
   function fetchPayable() {
     fetch(urlPayment, {
       method: 'get',
@@ -109,6 +121,9 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
     setDismissConfirm(false);
   }
 
+
+
+  
   function handleEnd() {
     fetch(urlEnd, {
       method: 'POST',
@@ -255,7 +270,11 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
           <Box p={2}>
             <Grid container spacing={2} alignItems="center">
               <Grid item>
-                <Button variant="contained" color="primary">
+                <Button 
+                variant="contained" 
+                color="primary"
+                onClick={() => setChatRoom(true)}
+                  >
                   共乘聊天室
                 </Button>
               </Grid>

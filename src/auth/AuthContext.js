@@ -8,6 +8,8 @@ export const AuthProvider = ({children}) => {
   const [userToken, setUserToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
+  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
+
 
   // Check for the presence of the user token in cookies on mount
   useEffect(() => {
@@ -22,7 +24,7 @@ export const AuthProvider = ({children}) => {
   const login = async (username, password) => {
     try {
       // Make a request to login API endpoint
-      const response = await fetch('http://127.0.0.1:8080/login', {
+      const response = await fetch( url + '/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

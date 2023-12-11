@@ -5,7 +5,9 @@ import {useAuth} from "../../auth/AuthContext";
 
 export const Carpooljoinevent = ({itemid, initiatorID, route}) => {
   
-  const url = 'http://127.0.0.1:8080';
+
+  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
+  //const url = 'http://127.0.0.1:8080';
   const url_get_usr_info = url+"/get-user-info/";
   const url_join_the_carpool = url+"/join-the-carpool"
   // const url_get_usr_info = "http://localhost:8000/get-user-info/";

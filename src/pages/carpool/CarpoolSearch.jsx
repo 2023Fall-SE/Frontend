@@ -35,7 +35,8 @@ export const CarpoolSearch = () => {
   }
 
   const FindCarpool = (str1, str2) => {
-    const url = "http://127.0.0.1:8080";
+    //const url = "http://127.0.0.1:8080";
+    const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
     const url_find = url + "/find-carpool";
     const urlfindCarpool =
       url_find + '?startLocation=' + str1 + '&endLocation=' + str2;
