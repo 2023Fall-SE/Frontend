@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {auth, db} from '../firebase'
 import {addDoc, collection, serverTimestamp} from 'firebase/firestore'
-import {Form , Badge, Button} from 'react-bootstrap';
+import {Form , Badge, Button, Container} from 'react-bootstrap';
 import {useAuth} from "../../auth/AuthContext";
 import { useLocation } from 'react-router-dom';
 
@@ -60,19 +60,27 @@ const SendMessage = ({scroll}) => {
   }
 
   return (
-    <form onSubmit={sendMessage} className={style.form}>
-      <input
+    <Container>
+    <Form onSubmit={sendMessage} >
+      <Form.Group className="mb-3" controlId="formSendMessage" onChange={(e) => setInput(e.target.value)}>
+        <Form.Label>Message bar</Form.Label>
+        <Form.Control type="text" placeholder="Enter Message" />
+      </Form.Group>
+      <Button  variant="success" type = 'submit'> 
+        發送訊息
+      </Button>
+    </Form>
+    </Container>
+  );
+};
+
+// type = 'submit' send to handler
+
+/*<input
         value={input}
         onChange={(e) => setInput(e.target.value)}
         className={style.input}
         type='text'
         placeholder='Message'
-      />
-      <button className={style.button} type='submit'>
-        發送訊息
-      </button>
-    </form>
-  );
-};
-
+      />*/
 export default SendMessage;
