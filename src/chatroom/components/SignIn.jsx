@@ -5,7 +5,7 @@ import GoogleButton from 'react-google-button'
 
 import {auth} from '../firebase'
 import {GoogleAuthProvider, signInAnonymously, getAuth ,signInWithRedirect} from 'firebase/auth'
-
+import {Form , Badge, Button, Container, Col,Row} from 'react-bootstrap';
 const style = {
     wrapper: `flex justify-center`
 }
@@ -34,8 +34,7 @@ const carpoolmemberSignIn = () => {
 const SignIn = () => {
   return (
     <div className={style.wrapper}>
-        <GoogleButton onClick={googleSignIn} />
-        <button onClick={carpoolmemberSignIn}>User Sign In</button>
+        <Button onClick={carpoolmemberSignIn}>User Sign In</Button>
     </div>
   )
 }
