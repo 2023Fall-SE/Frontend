@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
-service = Service(executable_path='./chromedriver')
+service = Service(executable_path='./chromedriver-linux64/chromedriver')
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--disable-gpu')
