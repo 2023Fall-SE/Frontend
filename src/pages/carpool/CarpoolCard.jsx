@@ -210,6 +210,7 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
       .then((responseText) => {
         if (responseText.payment_url) {
           window.location.replace(responseText.payment_url);
+          
         } else {
           switch (responseText.detail) {
             case "使用者無此權限":
