@@ -4,8 +4,8 @@ import {useAuth} from "../../auth/AuthContext";
 import {useSearchParams} from "react-router-dom";
 
 export const Confirm = () => {
-  //const url = "http://127.0.0.1:8080";
-  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
+  const url = "http://127.0.0.1:8080";
+  //const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
   const [searchParams, setSearchParams] = useSearchParams();
   const {isLoading, userToken} = useAuth();
   const [carpoolMoney, setCarpoolMoney] = useState(0);

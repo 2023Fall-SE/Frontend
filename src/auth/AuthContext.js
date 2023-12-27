@@ -8,7 +8,8 @@ export const AuthProvider = ({children}) => {
   const [userToken, setUserToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
-  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
+  const url = 'http://127.0.0.1:8080';
+  //const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
 
 
   // Check for the presence of the user token in cookies on mount

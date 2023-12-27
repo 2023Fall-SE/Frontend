@@ -8,9 +8,9 @@ export const CarpoolEnded = () => {
   const {isLoading, userToken} = useAuth();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [endedEvents, setEndedEvents] = useState([]);
-  //const url = 'http://127.0.0.1:8080';
+  const url = 'http://127.0.0.1:8080';
   // const url = 'http://127.0.0.1:8000';
-  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
+  //const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
   const [carpoolMoney, setCarpoolMoney] = useState(null);
 
   const mockResult = [

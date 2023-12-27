@@ -29,8 +29,8 @@ const CarpoolCard = ({item, cardType, selectedCarpool, onSelect}) => {
   const [payConfirm, setPayConfirm] = useState(false);
   const [Chatroomconfirm,setChatRoom] = useState(false);
 
-  //const url = 'http://127.0.0.1:8080';
-  const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
+  const url = 'http://127.0.0.1:8080';
+  //const url = 'https://carpool-service-test-cvklf2agbq-de.a.run.app/'
   const urlDismiss = url+'/dismiss-the-carpool';
   const urlEnd = url+'/end-the-carpool';
   const urlLeave = url+'/leave-the-carpool';
